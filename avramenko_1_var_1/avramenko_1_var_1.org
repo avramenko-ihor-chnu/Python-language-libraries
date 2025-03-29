@@ -1,0 +1,918 @@
+#+TITLE:ООП: створення класа та об’єктів–екземплярiв класу
+#+AUTHOR: Авраменко Ігор Андрійович 201-Б
+#+DATE: <2025-02-18 Tue>
+#+OPTIONS: :toc:nil
+
+* Аудиторна частина
+** Приклади коду 14.1
+*** Створення екземпляра класу
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_1.py
+  # Оголошення порожнього класу MyClass
+  class MyClass: pass
+  obj = MyClass()
+  # Об'єкт obj - це екземпляр класу MyClass,
+  # (він має тип MyClass)
+  print(type(obj)) # <class '__main__.MyClass'>
+  # MyClass – це клас, він є об'єктом, екземпляром метакласу type
+  # який є абстракцією поняття типу даних
+  print(type(MyClass)) # <class 'type'>
+  # Тому з класами можна виконувати операції як із об'єктами наприклад, копиювання
+  AnotherClass = MyClass
+  print(type(AnotherClass))
+  # тепер AnotherClass – це те ж саме, що і MyClass,
+  # і obj є екземпляром класу AnotherClass
+  print(isinstance(obj, AnotherClass)) # True
+#+end_src
+
+#+RESULTS:
+: <class '__main__.MyClass'>
+: <class 'type'>
+: <class 'type'>
+: True
+
+*** Всі елементи класа називають атрибутами.
+Оголошення класу /MyClass/ з двома атрибутами =int_field=, =str_field=, які є змінними.
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_2.py
+
+  class MyClass:
+      int_field = 8
+      str_field = 'a string'
+  # Звернення до атрибутів класу
+  print (MyClass.int_field); print (MyClass.str_field)
+  # Створення двох екземплярів класу
+  object1 = MyClass (); object2 = MyClass ()
+  # Звернення до атрибутів класу через його екземпляри
+  print (object1.int_field); print (object2.str_field)
+  # Всі перераховані вище звернення до атрибутів насправді відносяться
+  # до двох одних і тих самих змінних
+  # Зміна значення атрибута класу
+  MyClass.int_field = 10
+  print (MyClass.int_field); print (object1.int_field); print (object2.int_field)
+  # Однак, аналогічно до глобальних і локальних змінних,
+  # присвоєння значення атрибуту об'єкта не змінює значення
+  # атрибута класу, а веде до створення атрибута даних (нестатичного поля)
+  object1.str_field = 'another string'
+  print(MyClass.str_field); print(object1.str_field); print(object2.str_field)
+#+end_src
+
+#+RESULTS:
+#+begin_example
+8
+a string
+8
+a string
+10
+10
+10
+a string
+another string
+a string
+#+end_example
+
+*** Атрибути-дані аналогічні полям.
+Їх не треба описувати: як і змінні, вони створюються в момент першого присвоювання.
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_3.py
+
+  # Клас, який описує людину
+  class Person: pass
+  # Створення екземплярів класу
+  alex = Person()
+  alex.name = 'Alex'; alex.age = 18
+  john = Person()
+  john.name = 'John'; john.age = 20
+  # Атрибути-дані відносять тільки до окремих екземплярів класу
+  # і ніяк не впливають на значення відповідних атрибутів-даних інших екземплярів
+  print(alex.name, 'is', alex.age); print(john.name, 'is', john.age)
+  #print(Person.name, 'is', Person.age)
+#+end_src
+
+#+RESULTS:
+: Alex is 18
+: John is 20
+
+*** Атрибутами класу можуть бути й методи-функції
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_4.py
+
+  # Клас, який описує людину
+  class Person:
+      # Перший аргумент, який вказує на поточний екземпляр класу,
+      # прийнято називати self
+      def print_info(self):
+          print(self.name, 'is', self.age)
+  # Створення екземплярів класу
+  alex=Person(); alex.name='Alex'; alex.age=18
+  john = Person(); john.name = 'John'; john.age = 20
+  # Перевіримо, чим є атрибут-функція print_info класу Person
+  print(type(Person.print_info)) # функція (<class 'function'>)
+  # Викличемо його для об‘єктів alex і john
+  Person.print_info(alex)
+  Person.print_info(john)
+  # Метод – функція, зв‘язана з об‘єктом. Всі атрибути класу, які є
+  # функціями, описують відповідні методи екземплярів даного класу
+  print(type(alex.print_info)) # метод (<class 'method'>)
+  # Виклик методу print_info
+  alex.print_info()
+  john.print_info()
+#+end_src
+
+#+RESULTS:
+: <class 'function'>
+: Alex is 18
+: John is 20
+: <class 'method'>
+: Alex is 18
+: John is 20
+
+*** Метод-констуктор =__init__=
+Початковий стан об‘єкта слід створювати в методі-конструкторі =__init__=, який викликають автоматично після створення екземпляру класа. Його параметри вказують при створенні об‘єкта.
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_5.py
+
+  # Клас, який описує людину
+  class Person:
+      # Конструктор
+      def __init__(self, name, age):
+          self.name = name
+          self.age = age
+      # Метод з попереднього прикладу
+      def print_info(self):
+          print(self.name, 'is', self.age)
+  # Створення екземплярів классу
+  alex = Person('Alex', 18)
+  john = Person('John', 20)
+  # Виклик метода print_info
+  alex.print_info()
+  john.print_info()
+#+end_src
+
+#+RESULTS:
+: Alex is 18
+: John is 20
+
+*** Атрибути класу, які є функціями, - це тіж самі атрибути класу, як і змінні
+
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_6.py
+
+  def outer_method(self):
+      print('I am a method of object', self)
+  class MyClass:
+      method = outer_method
+  obj = MyClass(); obj.method()
+  print(type(obj.method()))
+  #print(type(outer_method()))
+#+end_src
+
+#+RESULTS:
+: I am a method of object <__main__.MyClass object at 0x7d52c88e2f90>
+: I am a method of object <__main__.MyClass object at 0x7d52c88e2f90>
+: <class 'NoneType'>
+
+*** Статичні методи.
+Статичними називають методи, які є загальними для класу та усіх екземплярів класу і не мають доступ до даних екземплярів класів. Для їх створення використовують декоратор /staticmethod/. Декоратор – це спеціальна функція, яка змінює поведінку функції або класу. Для використання декоратора треба перед відповідним оголошенням вказати символ =@=, ім'я необхідного декоратора і список його аргументів в круглих дужках. Якщо передавати параметрів декораторові не потрібно, дужки не вказують.
+
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_7.py
+
+  class MyClass:
+      # Оголошення атрибута класу
+      class_attribute = 8
+      def __init__(self): # Конструктор
+          self.data_attribute = 42
+      # Статичний метод (у нього немає параметру) self,
+      # оскільки він не зв‘язаний з жодним із екземплярів класу
+      # не має доступу до атрибутівм-даних
+      @staticmethod
+      def static_method():
+          print(MyClass.class_attribute)
+      def instance_method(self): # звичайний метод
+          print(self.data_attribute)
+  if __name__ == '__main__':
+      # Виклик статичного методу
+      MyClass.static_method()
+      #MyClass.instance_method(self)
+      # Інстанціювання об‘єкта
+      obj = MyClass()
+      # Виклик методу
+      obj.instance_method()
+      # Аналогічно атрибутам класу, доступ до статичних методів
+      # можна отримати й через екземпляр класу
+      obj.static_method()
+#+end_src
+
+#+RESULTS:
+: 8
+: 42
+: 8
+
+*** Класи - об'єкти. Класи можуть мати властні методи.
+Класи є об'єктами, тому крім атрибутів-функцій вони можуть мати і власні методи. Для створення методів класу використовують декоратор classmethod. В таких методах перший параметр прийнято називати не self, а cls. Методи класу зазвичай використовують в двох випадках: для створення
++ фабричних методів, які створюють екземпляри даного класу альтернативними способами;
++ статичних методів, які викликають статичні методи:
+  - оскільки даний клас передається як перший аргумент функції,
+  - не потрібно вручну вказувати ім'я класу для виклику статичного методу.
+
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_8.py
+
+  class Rectangle:
+      """ Клас, який описує прямокутник """
+      def __init__(self, side_a, side_b):
+          """ Конструктор класу
+          :param side_a: перша сторона
+          :param side_b: друга сторона """
+          self.side_a = side_a
+          self.side_b = side_b
+      def __repr__(self):
+          """Метод, який повертає подання об'єкта у вигляді рядка """
+          return 'Rectangle(%.1f, %.1f)' % (self.side_a, self.side_b)
+
+  class Circle:
+      """ Клас, який описує коло """
+      def __init__(self, radius):
+          self.radius = radius
+      def __repr__(self):
+          return 'Circle(%.1f)' % self.radius
+
+      @classmethod
+      def from_rectangle(cls, rectangle):
+          """Ми використовуємо метод класу в якості фабричного
+          методу,
+          який створює екземпляр класу Circle з екземпляру
+          класу Rectangle як коло, що вписане у цей прямокутник.
+          :param rectangle: Rectangle instance
+          :return: Circle instance """
+          radius = (rectangle.side_a ** 2 + rectangle.side_b ** 2) ** 0.5 / 2
+          return cls(radius)
+
+  def main():
+      rectangle = Rectangle(3, 4)
+      print(rectangle)
+      circle1 = Circle(1)
+      print(circle1)
+      circle2 = Circle.from_rectangle(rectangle)
+      print(circle2)
+
+  if __name__ == '__main__': main()
+#+end_src
+
+#+RESULTS:
+: Rectangle(3.0, 4.0)
+: Circle(1.0)
+: Circle(2.5)
+
+*** Приватні атрибути.
+Атрибути, імена яких розпочинаються, але не закінчуються, двома
+символами підкреслення, вважаються приватними. До них застосовують
+механізм «name mangling»: зсередини класу і його екземплярів до цих атрибутів
+можна звертатися по тому ж імені, яке було задано при оголошенні (однак до
+імен зліва додається підкреслення і ім'я класу). Цей механізм не передбачає
+захисту даних від зміни ззовні, тому що до них все одно можна звернутися,
+знаючи ім'я класу і те, як Python змінює імена приватних атрибутів, проте
+дозволяє захистити їх від випадкового перевизначення в класах-нащадках.
+
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_9.py
+
+  class MyClass:
+      def __init__(self):
+          self.__private_attribute = 42
+      def get_private(self):
+          return self.__private_attribute
+
+  obj = MyClass()
+  print(obj.get_private()) # 42
+  #print(obj.__private_attribute) # помилка
+  print(obj._MyClass__private_attribute) # 42
+#+end_src
+
+#+RESULTS:
+: 42
+: 42
+
+*** Внутрішні атрибути Python.
+Атрибути, імена яких розпочинаються і закінчуються двома знаками
+підкреслення, є внутрішніми для Python і задають особливі властивості об'єктів
+(наприклад, рядок документування =__doc__=, атрибут =__class__=, в якому
+зберігають клас даного об'єкта). Серед таких атрибутів є методи. Подібні
+методи називають методами зі спеціальними іменами: вони задають особливу
+поведінку об'єктів і дозволяють перевизначати поведінку вбудованих функцій і
+операторів для екземплярів заданого класу. Найчастіше використовують
+метод-конструктор =__init__=.
+
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_10.py
+
+  class Complex:
+      """ Комплексне число """
+      def __init__(self, real=0.0, imaginary=0.0):
+          """ Конструктор
+          :param real: дійсна частина
+          :param imaginary: уявна частина """
+          self.real = real; self.imaginary = imaginary
+      def __repr__(self):
+          """ Метод __repr__ повертає подання об‘єкта у вигляді
+          рядка, який має вигляд виразу, що створює аналогічний об‘єкт,
+          інакше містить його опис;
+          Викликають функцією repr. """
+          return 'Complex(%g, %g)' % (self.real, self.imaginary)
+      def __str__(self):
+          """ Метод __str__ повертає подання об‘єкта у вигляді
+          рядка; його викликають функції str, print і format. """
+          return '%g %c %gi' % (self.real,
+              '+' if self.imaginary >= 0 else '-',
+              abs(self.imaginary))
+      # Арифметичні операції
+      def __add__(self, other):
+          """ Метод __add__ визначає операцію додавання. """
+          return Complex(self.real + other.real,
+              self.imaginary + other.imaginary)
+      def __neg__(self):
+          """ Операція заперечення """
+          return Complex(-self.real, -self.imaginary)
+      def __sub__(self, other):
+          """ Операція віднімання.
+          Додавання і заперечення вже визначені, тому віднімання
+          можна визначити через них """
+          return self + (-other)
+      def __abs__(self):
+          """ Модуль числа """
+          return (self.real ** 2 + self.imaginary ** 2) ** 0.5
+      # Операції порівняння
+      def __eq__(self, other):
+          return self.real==other.real and self.imaginary==other.imaginary
+      def __ne__(self, other):
+          return not (self == other)
+
+  def main():
+      x = Complex(2, 3.5)
+      print(repr(x)); print('x =', x)
+      y = Complex(5, 7)
+      print('y =', y); print('x + y =', x + y)
+      print('x - y =', x - y); print('|x| =', abs(x))
+      print('(x == y) =', x == y)
+  if __name__ == '__main__': main()
+#+end_src
+
+#+RESULTS:
+: Complex(2, 3.5)
+: x = 2 + 3.5i
+: y = 5 + 7i
+: x + y = 7 + 10.5i
+: x - y = -3 - 3.5i
+: |x| = 4.031128874149275
+: (x == y) = False
+
+*** Клас Одинак (Singleton)
+Використання спеціального методу =__new__= для реалізації такого шаблону
+проектування як Одинак (Singleton) (це шаблон проектування, який гарантує,
+що даний клас має тільки один екземпляр, і породжує його).
+
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_11.py
+
+  class Singleton:
+      _instance = None # атрибут, який зберігає екземпляр класу
+      def __new__(cls, *args, **kwargs):
+          """ Метод __new__ викликають при створенні екземпляра класу """
+      # Якщо екземпляр ще не створений, то створюємо його
+          if cls._instance is None:
+              cls._instance = object.__new__(cls, *args, **kwargs)
+      # Повертаємо екземпляр, який існує
+          return cls._instance
+      def __init__(self):
+          self.value = 8
+
+  obj1=Singleton(); print(obj1.value)
+  obj2 = Singleton(); obj2.value = 42
+  print(obj1.value)
+  print(obj2.value)
+#+end_src
+
+#+RESULTS:
+: 8
+: 42
+: 42
+
+*** Використання функції =__getattribute__= для приховування даних
+
+#+begin_src python :results output :exports both :tangle avramenko_ihor_1_aud_ex_12.py
+
+  class MyClass:
+      def __init__(self):
+          self.password = None
+      def __getattribute__(self, item):
+          """Метод __getattribute__ викливають при отриманні
+          атрибутів"""
+      # Якщо поле-запит secret_field і пароль правильний
+          if item == 'secret_field' and self.password == '9ea)fc':
+      # то повертаємо значення
+              return 'secret value'
+          else:
+      # інакше викликаємо метод __getattribute__ класу object
+              return object.__getattribute__(self, item)
+  obj = MyClass()# Створення екземпляру класу
+  # Розблокування секретного поля
+  obj.password = '9ea)fc'
+  # Виведення значення secret field.
+  # Значення буде отримано, якщо розкоментувати попередній
+  # рядок програмного коду, інакше отримаємо помилку
+  print(obj.secret_field)
+#+end_src
+
+#+RESULTS:
+: secret value
+** Приклади коду 14.2
+*** Приклад 1
+**** Створимо клас з одним атрибутом поза методом й одним методом, який виводить значення цього атрибута на екран із змінами:
+#+begin_src python :session :results none :exports code
+  class First:
+      color = "red"
+      def out(self): print (self.color + "!")
+#+end_src
+**** Створимо два об‘єкти даного класу:
+#+begin_src python :session :results output :exports both
+  obj1 = First(); obj2 = First()
+  # Обидва об‘єкта (obj1, obj2) мають два однакових атрибута:
+  # color - у вигляді властивості й printer (у вигляді методу)
+  print (obj1.color); print (obj2.color)
+  obj1.out(); obj2.out()
+#+end_src
+
+#+RESULTS:
+: red
+: red
+: red!
+: red!
+
+*** Приклад 2
+Нехай в класі за допомогою атрибутів визначені дві властивості об'єктів:
+червоний колір і кругла форма. Методи можуть змінювати ці властивості в
+залежності від побажань тих, хто створює об'єкти.
+#+begin_src python :session :results output :exports both
+  class Second:
+      color = "red"
+      form = "circle"
+      def changecolor(self,newcolor):
+          self.color = newcolor
+      def changeform(self,newform):
+          self.form = newform
+
+  obj1 = Second(); obj2 = Second()
+  print (obj1.color, obj1.form) # на екран "red circle"
+  print (obj2.color, obj2.form) # на екран "red circle"
+  obj1.changecolor("green") # колір першого об'єкта
+  obj2.changecolor("blue") # колір другого об'єкта
+  obj2.changeform("oval") # форма другого об'єкта
+  print (obj1.color, obj1.form) # на екран "green circle"
+  print (obj2.color, obj2.form) # на екран "blue oval"
+#+end_src
+
+#+RESULTS:
+: red circle
+: red circle
+: green circle
+: blue oval
+
+Тут за замовчуванням будь-який створений об'єкт має червоний колір і
+круглу форму. Однак в подальшому за допомогою методів даного класу можна
+поміняти і колір і форму будь-якого об'єкта. В результаті об'єкти перестають
+бути однаковими (червоними і круглими), хоча зберігають однаковий набір
+властивостей (колір і форму).
+Як же відбуваються зміни? – Методи крім параметра self, можуть мати й
+інші параметри, в яких передаються дані для обробки їх цим методом.
+Наприклад, метод changecolor має додатковий параметр newcolor, за
+допомогою якого, в метод можна передати дані про бажані кольори фігури.
+Далі метод змінює колір за допомогою відповідних інструкцій.
+
+** Приклад 14.3
+*** Приклад 1
+Більшість класів використовують спеціальний метод
+=__init__=, який при створенні об'єкта створює йому атрибути (викликати даний
+метод не потрібно, він сам запускається під час виклику класу, а виклик класу
+відбувається, коли створюється об'єкт). Такий метод називають конструктором
+класу. Першим параметром у =__init__= є =self=, на місце якого підставляється
+об'єкт в момент його створення. Другий і наступні (якщо є) параметри
+замінюють аргументами, які передані в конструктор при виклику класу.
+Розглянемо два класи: в одному використовується конструктор, а в іншому ні.
+Потрібно створити два атрибути об'єкта.
+
+#+begin_src python :results output :exports both
+  class YesInit:
+      def __init__(self,one,two):
+          self.fname = one; self.sname = two
+  obj1 = YesInit("Peter","Ok")
+  print (obj1.fname, obj1.sname)
+
+  class NoInit:
+      def names(self,one,two):
+          self.fname = one; self.sname = two
+  obj1 = NoInit(); obj1.names("Peter","Ok")
+  '''ПОМИЛКА
+  obj1 = YesInit(); obj1.names("Peter","Ok") '''
+  print (obj1.fname, obj1.sname)
+  obj2 = YesInit("Peter","Ok")
+  print (obj2.fname, obj2.sname)
+#+end_src
+
+#+RESULTS:
+: Peter Ok
+: Peter Ok
+: Peter Ok
+
+*** Приклад 2
+Створимо клас, значення початкових атрибутів (з методу =__init__=) якого
+залежить від переданих аргументів при створенні об'єктів. Далі ці атрибути
+об'єктів, створених на основі даного класу, можна змінювати за допомогою
+методів
+#+begin_src python :results output :exports both
+  class Building:
+      def __init__(self,w,c,n=0):
+          self.what=w; self.color=c; self.numbers=n; self.mwhere(n)
+      def mwhere(self,n):
+          if n <= 0: self.where = "відсутні"
+          elif 0 < n < 100: self.where = "малий склад"
+          else: self.where = "основний склад"
+      def plus(self,p):
+          self.numbers = self.numbers + p
+          self.mwhere(self.numbers)
+      def minus(self,m):
+          self.numbers=self.numbers-m
+          self.mwhere(self.numbers)
+
+  m1 = Building("дошки", "білі",50)
+  m2 = Building("дошки", "коричневі", 300)
+  m3 = Building("цегла","білі")
+  print (m1.what,m1.color,m1.where)
+  print (m2.what,m2.color,m2.where)
+  print (m3.what,m3.color,m3.where)
+  m1.plus(500);print (m1.numbers, m1.where)
+#+end_src
+
+#+RESULTS:
+: дошки білі малий склад
+: дошки коричневі основний склад
+: цегла білі відсутні
+: 550 основний склад
+
+** Контрольні запитання
+*** 1. Назвіть парадигму об'єктно-орієнтованого програмування.
+   1. об'єктно-орієнтована програма складається з об'єктів, які посилають один одному повідомлення;
+   2. кожний об'єкт може складатися з інших об'єктів (а може і не складатися);
+   3. кожний об'єкт належить певному класу (типу), який задає поведінку об'єктів, створених на його основі.
+
+*** 2. Яка інструкція передбачена для створення класів.
+#+begin_src python :exports code :results none
+  class ІМ‘Я_КЛАСУ (СУПЕРКЛАСИ [За потреби]):
+      змінна = значення ...
+      def ІМ‘Я_МЕТОДА(self, ...):
+          self.змінна = значення ...
+
+  #Передбачена можливість створення порожнього класу
+  class ІМ‘Я_КЛАСУ (СУПЕРКЛАСИ [За потреби]): pass
+#+end_src
+
+*** 3. Для чого використовують метод конструктора =__init__=.
+Метод конструктора =__init__= використовують для
+встановлення початкових значень атрибутів екземплярів і виконання інших
+початкових операцій (це - звичайна функція, яка підтримує і можливість
+визначення значень аргументів за замовчуванням, і передачу іменованих
+аргументів).
+* Самостійна частина. Варіант 1 (Аудиторія у ВНЗ)
+Завдання
+1. Ознайомитися з теоретичним матеріалом.
+2. Відповідно до свого варіанту
+3. визначити умови; за допомогою формул описати варіанти виконання необхідний дій; розробити програмний додаток, який розв‘язує завдання;
+4. організувати, якщо треба, введення даних з клавіатури і виведення у консоль;
+5. атрибути пов'язати з методами, які дозволяють їх змінювати
+6. реалізувати такі два py файли:
+   1. створення класу, який не містить конструктор класу, в класі за допомогою атрибутів (поза функції) встановлюються декілька властивостей об‘єктів;
+   2. створення класу з конструктором классу (використати метод __init__ для визначення початкових значень атрибутів об‘єктів при їх створенні): для аргументів конструктора додати значення за замовчуванням; - на основі класу створити декілька об‘єктів-екземплярів.
+7. Скласти звіт і захистити його по роботі. Захист роботи включає в себе демонстрацію працездатності програми на різних вхідних даних.
+
+** створення класу, який не містить конструктор класу
+#+begin_src python :results output :exports both
+  import copy
+
+  class audytoriya:
+
+      def __init__(self):
+          self.nomer = 0
+          self.num_of_tables = 0
+          self.schedule = {
+          "Понеділок" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+          "Вівторок" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+          "Середа" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+          "Четвер" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+          "П'ятниця" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+      }
+
+
+      def is_available(self, day, time):
+          output = 'Аудиторія номер %d - ' %self.nomer + ('ВІЛЬНА' if self.schedule[day][time] == None else ('ЗАЙНЯТА викладачем %s')%(self.schedule[day][time]))
+          return(output)
+
+      def __str__(self):
+          sch_out = str()
+          for i in self.schedule.keys():
+              sch_out = sch_out + '\n' + i
+              for n in self.schedule[i].keys():
+                  sch_out = sch_out + '\n\t' + n + '\t- ' + ( 'Вільна' if self.schedule[i][n]==None else 'Зайнята')
+          return ("""Номер аудиторії: %d\nМісць у аудиторії: %d\nГрафік занять у аудиторії:\n%s""") % (self.nomer, self.num_of_tables, sch_out)
+
+  audit_39 = audytoriya(); audit_0 = audytoriya()
+
+  #print (audit_0.schedule is audit_39.schedule)
+
+  audit_39.nomer = 39; audit_39.num_of_tables = 40; audit_39.schedule["Понеділок"]["9:20"] = "Ігор Валерійович"
+
+  print (audit_0.schedule == audit_39.schedule)
+  print (audit_0.schedule is audit_39.schedule)
+  print (audit_39)
+  print (audit_39.is_available("Понеділок", "9:20"))
+
+  print('\n' + '-' * 10)
+
+  print(audit_0)
+  print(audit_0.is_available("Понеділок", "9:20"))
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+False
+False
+Номер аудиторії: 39
+Місць у аудиторії: 40
+Графік занять у аудиторії:
+
+Понеділок
+	8:20	- Вільна
+	9:20	- Зайнята
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Вівторок
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Середа
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Четвер
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+П'ятниця
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Аудиторія номер 39 - ЗАЙНЯТА викладачем Ігор Валерійович
+
+----------
+Номер аудиторії: 0
+Місць у аудиторії: 0
+Графік занять у аудиторії:
+
+Понеділок
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Вівторок
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Середа
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Четвер
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+П'ятниця
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Аудиторія номер 0 - ВІЛЬНА
+#+end_example
+
+[[file:avramenko_1_var_1_ex_1.py][avramenko-1-var-1-ex-1.py]]
+
+** створення класу, який містить конструктор класу
+#+begin_src python :results output :exports both
+  class audytoriya:
+
+      def __init__(self):
+          self.nomer = 0
+          self.num_of_tables = 0
+          self.schedule = {
+          "Понеділок" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+          "Вівторок" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+          "Середа" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+          "Четвер" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+          "П'ятниця" : {
+              "8:20"  : None,
+              "9:20"  : None,
+              "11:30" : None,
+              "13:00" : None,
+              "14:40" : None,
+              "16:10" : None},
+      }
+
+
+      def is_available(self, day, time):
+          output = 'Аудиторія номер %d - ' %self.nomer + ('ВІЛЬНА' if self.schedule[day][time] == None else ('ЗАЙНЯТА викладачем %s')%(self.schedule[day][time]))
+          return(output)
+
+      def __str__(self):
+          sch_out = str()
+          for i in self.schedule.keys():
+              sch_out = sch_out + '\n' + i
+              for n in self.schedule[i].keys():
+                  sch_out = sch_out + '\n\t' + n + '\t- ' + ( 'Вільна' if self.schedule[i][n]==None else 'Зайнята')
+          return ("""Номер аудиторії: %d\nМісць у аудиторії: %d\nГрафік занять у аудиторії:\n%s""") % (self.nomer, self.num_of_tables, sch_out)
+
+  audit_39 = audytoriya(); audit_0 = audytoriya()
+
+  #print (audit_0.schedule is audit_39.schedule)
+
+  audit_39.nomer = 39; audit_39.num_of_tables = 40; audit_39.schedule["Понеділок"]["9:20"] = "Ігор Валерійович"
+
+  print (audit_0.schedule == audit_39.schedule)
+  print (audit_0.schedule is audit_39.schedule)
+  print (audit_39)
+  print (audit_39.is_available("Понеділок", "9:20"))
+
+  print('\n' + '-' * 10)
+
+  print(audit_0)
+  print(audit_0.is_available("Понеділок", "9:20"))
+
+#+end_src
+
+#+RESULTS:
+#+begin_example
+False
+False
+Номер аудиторії: 39
+Місць у аудиторії: 40
+Графік занять у аудиторії:
+
+Понеділок
+	8:20	- Вільна
+	9:20	- Зайнята
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Вівторок
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Середа
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Четвер
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+П'ятниця
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Аудиторія номер 39 - ЗАЙНЯТА викладачем Ігор Валерійович
+
+----------
+Номер аудиторії: 0
+Місць у аудиторії: 0
+Графік занять у аудиторії:
+
+Понеділок
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Вівторок
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Середа
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Четвер
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+П'ятниця
+	8:20	- Вільна
+	9:20	- Вільна
+	11:30	- Вільна
+	13:00	- Вільна
+	14:40	- Вільна
+	16:10	- Вільна
+Аудиторія номер 0 - ВІЛЬНА
+#+end_example
+
+[[file:avramenko_1_var_1_ex_2.py][avramenko-1-var-1-ex-2.py]]

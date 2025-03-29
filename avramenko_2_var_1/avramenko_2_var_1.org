@@ -1,0 +1,670 @@
+#+TITLE:Наслідування атрибутів класу в ООП
+#+AUTHOR:Авраменко Ігор Андрійович 201-Б
+#+DATE:<2025-03-02 Sun>
+
+* Аудиторна частина
+** Приклади коду 15.1
+*** Об'єкти на основі класів та суперкласів
+Об'єкти можна створювати як на основі класів, так і
+суперкласів. Створимо два класи: =Table= і =Kitchen= (другий є підкласом першого і
+успадковує всі його атрибути – методи =__init__= і outing).
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_1.py
+  class Table:
+      def __init__(self,l,w,h):
+          self.lenght = l #*len
+
+          self.width  = w
+          self.height = h
+
+      def outing(self):
+          print (self.lenght,self.width,self.height)
+
+  class Kitchen(Table):
+      def howplaces(self,n):
+          if n < 2:
+              print ("It is not kitchen table")
+              self.places = n # <-- Додав. Без цього рядка видає помилку при n<2
+          else: self.places = n
+
+      def outplases(self):
+          print (self.places)
+
+  t_room1 = Kitchen(2,1,0.5)
+  t_room1.outing(); t_room1.howplaces(1)
+  t_room1.outplases()
+  t_2 = Table(1,3,0.7); t_2.outing()
+  #t_2.howplaces(5)
+#+end_src
+
+#+RESULTS:
+: 2 1 0.5
+: It is not kitchen table
+: 1
+: 1 3 0.7
+
+Наприкінці створено два об'єкти: =t_room1=, =t_2=. Перший об'єкт належить
+до класу =Kitchen= і успадковує атрибути цього класу і його суперкласу. Другий
+об'єкт належить класу =Table=; до класу =Kitchen= він ніякого відношення не має і
+тому не може звертатися до методів =howplaces= і =outplases=.
+
+** Приклад 15.2
+*** Порядок успадкування
+Описати структуру класів, зображену на схемі, таким
+чином, щоб дотримувався заданий порядок спадкування в класах, які мають
+кілька суперкласів:
++ A()
++ B(A)
++ C(A)
++ D(B,C)
++ P(A)
++ E(C,P,B)
++ F(P,B)
+[[file:Screenshot_2025-03-01_10-27-21.png]]
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_2.py
+  class A():
+      def __call__(self): return 'Student '
+  class C(A):
+      def __call__(self): return 'Chloe '
+  class B(A):
+      def __call__(self): return 'Bob '
+  class P(A):
+      def __call__(self): return 'Piter '
+
+  class D(B,C):
+      def __init__(self):
+          self.name='Denis'
+          print(A().__call__()+super().__call__()+'('+super(B,self).__call__()+')' +' like '+self.name)
+
+  class E(C,P,B):
+      def __init__(self):
+          self.name='Eelay'
+          print(A().__call__()+super().__call__()+'('+super(C,self).__call__()+ super(P,self).__call__()+')'+' like '+self.name)
+
+  class F(P,B):
+      def __init__(self):
+          self.name='Forth'
+          print(A().__call__()+super().__call__()+'('+super(P,self).__call__()+')' +' like '+self.name)
+
+  I1=D(); I2=E(); I3=F()
+#+end_src
+
+#+RESULTS:
+: Student Bob (Chloe ) like Denis
+: Student Chloe (Piter Bob ) like Eelay
+: Student Piter (Bob ) like Forth
+
+** Приклад 15.3
+*** Успаткування класів
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_3.py
+  class Figure(object):
+      def __init__(self, side):
+          self.side = side
+  class Square(Figure):
+      def draw(self):
+          for i in range(self.side):
+              print('*' * self.side)
+
+  class Triangle(Figure):
+      def draw(self):
+          for i in range(self.side):
+              print('*' * i)
+
+  def main():
+      square = Square(10); square.draw(); print()
+      triangle = Triangle(5)
+      triangle.draw()
+  if __name__ == '__main__': main()
+#+end_src
+
+#+RESULTS:
+#+begin_example
+,**********
+,**********
+,**********
+,**********
+,**********
+,**********
+,**********
+,**********
+,**********
+,**********
+
+
+,*
+,**
+,***
+,****
+#+end_example
+
+*** Множинне успаткування
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_4.py
+  class Bird(object):
+      def fly(self):
+          print('I am flying.')
+  class Horse(object):
+      def run(self):
+          print('I am running.')
+
+  class Pegasus(Horse, Bird): pass
+
+  def main():
+      bird = Bird()
+      horse = Horse()
+      pegasus = Pegasus()
+      bird.fly()
+      # bird.run() # помилка
+      print()
+      # horse.fly() # помилка
+      horse.run(); print()
+      pegasus.fly(); pegasus.run()
+  if __name__ == '__main__': main()
+#+end_src
+
+#+RESULTS:
+: I am flying.
+: 
+: I am running.
+: 
+: I am flying.
+: I am running.
+
+*** Порядок дозволу методів при ромбоподібному множинному успадкуванні
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_5.py
+  class A: #(object)
+      def method(self):
+          print('A method')
+
+  class B(A):pass
+
+  class C(A):
+      def method(self):
+          print('C method')
+  class D(B, C): pass
+
+  obj = D()
+  obj.method() # 'C method'
+#+end_src
+
+#+RESULTS:
+: C method
+
+Порядок дозволу методів при ромбоподібному множинному
+успадкуванні. Тут не вказано, що клас A успадковується від object. Даний клас
+буде успадкований від нього за замовчуванням. Pезультатом буде «C method».
+У попередньому прикладі обидві версії інтерпретатора викличуть метод класу
+C. При цьому відповідно до ієрархії класів саме метод класу C і повинен бути
+викликаний.
+*** Доступ до атрибуту суперкласу (I метод)
+Якщо в заданому класі атрибут або метод був перевизначений, то
+доступ до відповідного атрибуту суперкласу можна отримати двома способами.
+Перший спосіб – явне звернення до атрибутів суперкласу за його ім‘ям.
+Недолік такого підходу – ускладнюється підтримка коду:
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_6.py
+  class Base:
+      attr = 'Base attribute'
+      def method(self):
+          print('Base method, current class is', self.__class__.__name__)
+
+  class Child(Base):
+      attr = 'Redefined attribute'
+      @staticmethod
+      def get_superclass_attr():
+          return Base.attr # отримання атрибуту класа Base
+      def method(self): # перевизначення методу
+          Base.method(self) # виклик метода суперкласса
+          print('Child method, current class is', self.__class__.__name__)
+
+  def main():
+      print('Base:'); print(Base.attr)
+      base_instance = Base(); base_instance.method()
+      print(); print('Child:'); print(Child.attr)
+      print(Child.get_superclass_attr())
+      child_instance = Child()
+      child_instance.method()
+  if __name__ == '__main__': main()
+#+end_src
+
+#+RESULTS:
+: Base:
+: Base attribute
+: Base method, current class is Base
+: 
+: Child:
+: Redefined attribute
+: Base attribute
+: Base method, current class is Child
+: Child method, current class is Child
+
+*** Доступ до атрибуту суперкласу (II метод)
+Другий спосіб. Існує спеціальний клас =super=, екземпляри якого є
+спеціальними проксі-об'єктами, прив'язаними до заданої ієрархії класів і
+надають доступ до атрибутів наступного класу в лінеаризації того класу, в
+якому був створений об'єкт =super=. Отже, за допомогою super можна отримати
+доступ до атрибутів і методів суперкласу, не називаючи його імені, причому це
+буде давати коректні результати навіть при використанні множинного
+успадкування. Виклик super().method() еквівалентний виклику super(__class__,
+self).method().
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_7.py
+  class Base(object):
+      attr = 'Base attribute'
+      def method(self):
+          print('Base method, current class is', self.__class__.__name__)
+  class Child(Base):
+      attr = 'Redefined attribute'
+      def get_superclass_attr(self):
+          return super().attr # отримання атрибуту класа Base
+      def method(self): # перевизначення методу
+          super().method() # виклик метода суперкласу
+          print('Child method, current class is', self.__class__.__name__)
+
+  def main():
+      print('Base:'); print(Base.attr)
+      base_instance = Base()
+      base_instance.method(); print()
+      print('Child:'); print(Child.attr)
+      child_instance = Child()
+      print(child_instance.get_superclass_attr())
+      child_instance.method()
+      print()
+      # super можна викликати де завгодно, навіть за межами класу
+      super(Child, child_instance).method()
+  if __name__ == '__main__': main()
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Base:
+Base attribute
+Base method, current class is Base
+
+Child:
+Redefined attribute
+Base attribute
+Base method, current class is Child
+Child method, current class is Child
+
+Base method, current class is Child
+#+end_example
+
+*** Використання =super= при множинному успадкуванні
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_8.py
+  class Animal(object):
+      def __init__(self):
+          self.can_fly = False
+          self.can_run = False
+      def print_abilities(self):
+          print(self.__class__.__name__)
+          print('Can fly:', self.can_fly)
+          print('Can run:', self.can_run); print()
+
+  class Bird(Animal):
+      def __init__(self):
+          super().__init__()
+          self.can_fly = True
+
+  class Horse(Animal):
+      def __init__(self):
+          super().__init__()
+          self.can_run=True
+
+  class Pegasus(Horse, Bird): pass
+
+  def main():
+      bird = Bird()
+      bird.print_abilities()
+      horse = Horse()
+      horse.print_abilities()
+      pegasus = Pegasus()
+      pegasus.print_abilities()
+  if __name__ == '__main__': main()
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Bird
+Can fly: True
+Can run: False
+
+Horse
+Can fly: False
+Can run: True
+
+Pegasus
+Can fly: True
+Can run: True
+
+#+end_example
+
+*** Декоратор =gen_init=
+Використання =super=, декоратору =gen_init= і побудова інтерпретатором
+лінеаризації. Декоратор =gen_init= додає автоматично згенерований конструктор,
+це – функція, яка приймає функцію або клас і повертає інший об'єкт, що буде
+прив'язаний до початкового імені. Зазвичай його використовують для зміни
+поведінки фукнції (шляхом створення нової функції, яка викликає початкову)
+або модифікації класу (наведено в даному прикладі).
+Маємо таку ієрархію класів:
+[[file:2.png]]
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_9.py
+  def gen_init(cls):
+      """ Декоратор gen_init:
+      :param cls: клас, який підлягає модифікації
+      :return: клас із доданим конструктором """
+      def init(self):
+          print('Entered', cls.__name__, "constructor")
+          super(cls, self).__init__()
+          print('Quit', cls.__name__, "constructor")
+      cls.__init__ = init
+      return cls
+  @gen_init
+  class A(object): pass
+  @gen_init
+  class B(object): pass
+  @gen_init
+  class C(A, B): pass
+  @gen_init
+  class D(C, B): pass
+  @gen_init
+  class E(D): pass
+  print(E.__mro__); obj = E()
+#+end_src
+
+#+RESULTS:
+#+begin_example
+(<class '__main__.E'>, <class '__main__.D'>, <class '__main__.C'>, <class '__main__.A'>, <class '__main__.B'>, <class 'object'>)
+Entered E constructor
+Entered D constructor
+Entered C constructor
+Entered A constructor
+Entered B constructor
+Quit B constructor
+Quit A constructor
+Quit C constructor
+Quit D constructor
+Quit E constructor
+#+end_example
+
+*** Функція isinstance (obj, cls)
+Функція isinstance (=obj=, =cls=) перевіряє, чи є =obj= екземпляром класу =cls= або класу, який є спадкоємцем класу =cls=
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_10.py
+  print(isinstance(8, int)) # True
+  print(isinstance('str', int)) # False
+  print(isinstance(True, bool)) # True
+  print(isinstance(True, int)) # True, тому що bool - підклас int
+  print(isinstance('a string', object)) # True, все є об‘єктами
+  print(isinstance(None, object)) # True, навіть None
+  print(isinstance(False, str)) # False
+  print(isinstance(int, type))
+  # True, будь-який клас – об‘єкт-екземпляр метакласу type
+  print(isinstance(42, type)) # False, 42 – це не тип даних
+#+end_src
+
+#+RESULTS:
+: True
+: False
+: True
+: True
+: True
+: True
+: False
+: True
+: False
+
+*** Функція issubclass(cls, base)
+Функція issubclass(=cls=, =base=) перевіряє, чи є класс =cls= спадкоємцем класу base
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_aud_ex_11.py
+  print(issubclass(bool, int)) # True
+  print(issubclass(float, int)) # False
+  print(issubclass(int, float)) # False
+  print(issubclass(complex, type)) # False
+  print(issubclass(complex, object))
+  # True, успатковано від object
+  class Base(object): pass
+  class Child(object): pass
+  print(issubclass(Child, Base)) # True
+  print(issubclass(Base, object)) # True
+  print(issubclass(Child, object)) # True за транзитивністю
+#+end_src
+
+#+RESULTS:
+: True
+: False
+: False
+: False
+: True
+: False
+: True
+: True
+
+** Контрольні запитання
+*** Назвіть принципи ООП
+Виділяють такі основні ідеї ООП як:
++ успадкування
++ інкапсуляція
++ поліморфізм:
+
+1. **Успадкування**. Можливість виділяти загальні властивості і методи класів в один клас верхнього рівня /(батьківський)/. Класи, які мають загального батька, різняться між собою за рахунок включення до їх складу різних додаткових властивостей /(атрибутів)/ і /методів/.
+2. **Інкапсуляція**. Атрибути (властивості) і методи класу класифікують на доступні ззовні (опубліковані) і недоступні (захищені). Захищені атрибути можна змінити, перебуваючи поза класом. Опубліковані атрибути також називають інтерфейсом об'єкта, тому що за їх допомогою з об'єктом можна взаємодіяти. Інкапсуляція покликана забезпечити надійність програми, тому що змінити істотні для існування об'єкта атрибути стає неможливо.
+3. **Поліморфізм**. Поліморфізм має на увазі заміщення атрибутів, описаних раніше в інших класах: ім'я атрибута залишається колишнім, а реалізація вже іншою. Поліморфізм дозволяє адаптувати класи, залишаючи при цьому один інтерфейс взаємодії.
+
+*** Назвіть основні переваги ООП
+1. Використання одного і того ж програмного коду з різними даними. Класи дозволяють створювати множину об'єктів, кожен з яких має власні значення атрибутів. Немає потреби вводити множину змінних (об'єкти отримують в своє розпорядження індивідуальний простір імен). Простір імен конкретного об'єкта формується на основі класу, від якого він був створений, а також на основі усіх батьківських класів даного класу.
+2. Успадкування і поліморфізм дозволяють не писати новий код, а налаштовувати вже існуючий, за рахунок додавання і перевизначення атрибутів. Це веде до скорочення обсягу вихідного коду.
+3. ООП спонукає програміста до ретельного попереднього аналізу предметної області та продуманого проєктування. Вдало створені класи та об'єкти забезпечують зручність розробки, спрощують супровід коду та одразу приносять користь у вигляді зменшення дублювання, підвищення гнучкості та масштабованості програмного забезпечення.
+*** Як можна визначити відношення «суперклас/підклас»
+У Python передбачено наслідання атрибутів класу. При створенні класу у вас є
+можливість вказати атрибути якого класу новий клас наслідує. Клас створений на
+основі іншого класу називаєтся "підкласом", клас (класи) якого ми наслідували
+називається "суперкласом".
+
+Підклас успадковує всі атрибути класу. При потребі можливо перевизначити
+атрибути класу та створити нові атрибути; зміни у підкласі ніяк не впливатимуть
+на суперклас. Зміни у суперкласі - змінюватимуть усі неперевизначені атрибути у
+його підкласах.
+*** Назвіть призначення функції =issubclass=
+=issubclass(Class,Base)= ("is subclass" - є підкласом) - перевіряє чи є клас
+=Class= спадкоємцем класу =Base=, або спадкоємцем спадкоємця класу =Base=.
+
+* Самостійна частина. Варіант 1
+Завдання
+1. Ознайомитися з теоретичним матеріалом. Опрацювати приклади.
+3. Відповідно до свого варіанту:
+   - визначити умови; за допомогою формул описати варіанти виконання необхідний дій; розробити програмний додаток, який розв‘язує завдання;
+   - організувати, якщо треба, введення даних з клавіатури і виведення у консоль;
+3. Використовуючи діаграми класів (на яких показують різноманітні класи, які утворюють систему, їх взаємозв‘язки), створити класи і методи класів (обробники повідомлень) для опису об'єктів, наведених в індивідуальному завданні. Необхідно дотримуватись таких вимог: при створенні класів використати механізм успадкування; визначити відношення «клас/підклас».
+4. Створити об'єкти для всіх елементів схеми. Поєднати елементи схеми, заповнивши атрибути-слоти, де зберігаються назви об'єктів-елементів, пов'язаних з даними, і номери вхід-вихід. Зберегти визначення класів, об'єктів-екземплярів, методів класів - оброблювачів повідомлень з інструкцією оператору виведення у файлі.
+
+** Варіант 1
+Задано граф спадкування класів (цифрами показана черговість
+спадкування для класів, які успадковуються від декількох батьків).
+
+Для класів **Error** і **Success** задати оброблювачі повідомлень, які при
+зверненні до них повертають повідомлення «Error» або «Success» (успіх),
+відповідно. Викликати обробник для класів «Begin» і «B». Визначити, які
+повідомлення виводяться при цьому? Пояснити чому.
+
+[[file:Screenshot_2025-03-02_00-56-49.png]]
+
+
+
+
+#+begin_src python :results output :exports both :tangle avramenko_ihor_2_sam_var_1.py
+  class Error:
+      @staticmethod
+      def __str__():
+          return("Error")
+  class Success:
+      @staticmethod
+      def __str__():
+          return("Success")
+
+  class NI(Error): pass#...Error
+  class NG(Error): pass#...Error
+  class NN(Error): pass#...Error
+
+  class L(Success): pass#..Success
+  class N(Success): pass#..Success
+
+  class I(L, N, NN): pass#.Success
+  class G(I, NI): pass#....Success
+
+  class E(NG, G): pass#....Success
+  class NE(Error): pass#...Error
+  class B(E, NE): pass#....Success
+
+  class H(I): pass#........Success
+  class R(I): pass#........Success
+  class W(H, R): pass#.....Success
+
+  class Begin(W, B): pass#.Success
+  #-----
+
+
+  print(B())#..............Success
+  print(Begin())#..........Success
+
+  print()
+
+  print("B --------> " ,B.mro())
+  print("Beging ---> " ,Begin.mro())
+#+end_src
+
+#+RESULTS:
+: Success
+: Success
+: 
+: B -------->  [<class '__main__.B'>, <class '__main__.E'>, <class '__main__.NG'>, <class '__main__.G'>, <class '__main__.I'>, <class '__main__.L'>, <class '__main__.N'>, <class '__main__.Success'>, <class '__main__.NN'>, <class '__main__.NI'>, <class '__main__.NE'>, <class '__main__.Error'>, <class 'object'>]
+: Beging --->  [<class '__main__.Begin'>, <class '__main__.W'>, <class '__main__.H'>, <class '__main__.R'>, <class '__main__.B'>, <class '__main__.E'>, <class '__main__.NG'>, <class '__main__.G'>, <class '__main__.I'>, <class '__main__.L'>, <class '__main__.N'>, <class '__main__.Success'>, <class '__main__.NN'>, <class '__main__.NI'>, <class '__main__.NE'>, <class '__main__.Error'>, <class 'object'>]
+
+
+
+
+*** Загальне пояснення
+MRO (Method resolution order - розв'язання порядку методу) у python працює так:
+- MRO - це список, що містить ланцюг класів, що блище до блище класс до початку списку то важливіший він є. Клас, що зусітрічаєтся в цьому списку раніше, отримаю право, остаточно визначити атрибути класу.
+
+Елементи до цього списку додаютьтя за "C3 lenealiztion algorithm".
+"Одним словом, ідея за C3 така, що ти записуєш усі правила впорядкування,
+введені спадкованими відносинами у комплексній класовій хієрархії, алгоритм
+визначить однозначне упорядукування класів яке зодовольняє їх усіх.
+Якщо визначити таке упорядукування неможливо - алгоритм видасть помилку." -- Гвідо ван Россум про алгоритм.
+
+C3 lenealiztion algorithm
+
+Як працює алгоритм лінеаризації С3?
+Алгоритм лінеаризації C3 обчислює ТОіР за допомогою наступного процесу:
+- Почніть з цільового класу (наприклад, Z) і додайте його до списку лінеаризації.
+- Об'єднати лінеаризацію батьківських класів (F, G, H) зі збереженням їх порядку.
+- Виберіть наступний клас зі списків таким чином, щоб: Клас повинен бути першим
+  доступним класом у будь-якому списку і не повинен з'являтися пізніше в жодному
+  іншому списку.
+- Видаліть вибраний клас з усіх списків. Повторюйте процес, доки всі класи не будуть оброблені.
+*** Пояснення, що конкретно відбуваєтся у 'B' та у 'Begin'
+**** class B:
+Стосунки класів:
++ B успадковує від E та NE
+  * E успадковує від NG та G
+    - NG успадковує від Error
+    - G успадковує від I та NI
+      + I успадковує від L, N та NN
+        * L успадковує від Success
+        * N успадковує від Success
+        * NN успадковує від Error
+      + NI успадковує від Error
+  * NE успадковує від Error
+
+--------
++ Лінеризація(B) (далі: Л(B)) = [B, Л(E), Л(NE)]
+  * Л(E) = [E, Л(NG), Л(G)]
+    - Л(NG) = [NG, Л(Error)]
+      + Л(Error) = [Error, object]
+    - Л(G) = [G, Л(I), Л(NI)]
+      + Л(I) = [I, Л(L), Л(N), (NN)]
+        * Л(L) = [L, Л(Success)]
+          - Л(Success) = [Success, object]
+        * Л(N) = [N, Л(Success)]
+          - Л(Success) = [Success, object]
+        * Л(NN) =  [NN, Л(Error)]
+          - Л(Error) = [Error, object]
+      + Л(NI) = [NI, Л(Error)]
+        * Л(Error) = [Error, object]
+  * Л(NE) = [NE, Л(Error)]
+    - Л(Error) = [Error, object]
+
++ Л(B)) = [B , E , NG , Error , object , G , I , L , Success , object , N , Success , object , NN , Error , object , NI , Error , object , NE , Error , object]
++ Л(B)) = [B , E , NG , G , I , L , N , Success , NN , NI , NE , Error , object]
+#+begin_src python :exports code
+  print("B --------> " ,B.mro())
+#+end_src
+
+: B -------->  [<class '__main__.B'>, <class '__main__.E'>, <class '__main__.NG'>, <class '__main__.G'>, <class '__main__.I'>, <class '__main__.L'>, <class '__main__.N'>, <class '__main__.Success'>, <class '__main__.NN'>, <class '__main__.NI'>, <class '__main__.NE'>, <class '__main__.Error'>, <class 'object'>]
+
+**** class Begin:
+Стосунки класів:
+1. Beging успадковує від W та B
+   + W успадковує від H та R
+     * H успадковує від I
+       - I успадковує від L, N та NN
+         1) L успадковує від Success
+         2) N успадковує від Success
+         3) NN успадковує від Error
+     * R успадковує від I
+       - I успадковує від L, N та NN
+         1) L успадковує від Success
+         2) N успадковує від Success
+         3) NN успадковує від Error
+   + B успадковує від E та NE
+     * E успадковує від NG та G
+       - NG успадковує від Error
+       - G успадковує від I та NI
+         + I успадковує від L, N та NN
+           * L успадковує від Success
+           * N успадковує від Success
+           * NN успадковує від Error
+         + NI успадковує від Error
+     * NE успадковує від Error
+
+
+- Лінеризація(Begin) (далі: Л(Begin)) = [Begin, Л(W), Л(B)]
+  + Л(W) = [W, Л(H), Л(R)]
+    * Л(H) = [H, Л(I)]
+      - Л(I) = [I, Л(L), Л(N), Л(NN)]
+        1. Л(L) = [L, Л(Success)]
+           - Л(Success) = [Success, object]
+        2. Л(N) = [N, Л(Success)]
+           - Л(Success) = [Success, object]
+        3. Л(NN) = [NN, Л(Error)]
+           - Л(Error) = [Error, object]
+    * Л(R) = [R, Л(I)]
+      - Л(I) = [I, Л(L), Л(N), Л(NN)]
+        1. Л(L) = [L, Л(Success)]
+           - Л(Success) = [Success, object]
+        2. Л(N) = [N, Л(Success)]
+           - Л(Success) = [Success, object]
+        3. Л(NN) = [NN, Л(Error)]
+           - Л(Error) = [Error, object]
+    * Л(B) = [B, Л(E), Л(NE)]
+      - Л(E) = [E, Л(NG), Л(G)]
+        1. Л(NG) = [NG, Л(Error)]
+           + Л(Error) = [Error, object]
+        2. Л(G) = [G, Л(I), Л(NI)]
+           + Л(I) = [I, Л(L), Л(N), (NN)]
+             * Л(L) = [L, Л(Success)]
+               - Л(Success) = [Success, object]
+             * Л(N) = [N, Л(Success)]
+               - Л(Success) = [Success, object]
+             * Л(NN) =  [NN, Л(Error)]
+               - Л(Error) = [Error, object]
+           + Л(NI) = [NI, Л(Error)]
+             * Л(Error) = [Error, object]
+      - Л(NE) = [NE, Л(Error)]
+        * Л(Error) = [Error, object]
+
+- Л(Begin)) = [Begin, W, H, I, L, Success, object, N, Success, object, NN, Error, object, R, I, L, Success, object, N, Success, object, NN, Success, object, B , E , NG , G , I , L , N , Success , NN , NI , NE , Error , object]
+- Л(Begin)) = [Begin, W, H, R, B, E, NG, G, I , L , N , Success , NN , NI , NE , Error , object]
+
+
+#+begin_src python :exports code
+  print("Beging ---> " ,B.mro())
+#+end_src
+
+: Beging --->  [<class '__main__.Begin'>, <class '__main__.W'>, <class '__main__.H'>, <class '__main__.R'>, <class '__main__.B'>, <class '__main__.E'>, <class '__main__.NG'>, <class '__main__.G'>, <class '__main__.I'>, <class '__main__.L'>, <class '__main__.N'>, <class '__main__.Success'>, <class '__main__.NN'>, <class '__main__.NI'>, <class '__main__.NE'>, <class '__main__.Error'>, <class 'object'>]

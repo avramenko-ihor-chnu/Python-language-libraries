@@ -1207,7 +1207,7 @@ VYKLADATSKA
   #    VYKLADATSKA
   vykladatska_3 = Vykladatska(3, 30)
   import shelve
-  db = shelve.open("MyDB_made_wiht_shelve")
+  db = shelve.open("MyDB_made_with_shelve")
   for object in (lekciyna_301,lekciyna_302,lekciyna_303,computerna_202,computerna_207,computerna_403,vykladatska_3):
       db[str(object.nomer)] = object
   db.close()
@@ -1215,7 +1215,7 @@ VYKLADATSKA
 
 #+begin_src python :results output :tangle avramenko_3_var_1_step_6_shelve_explore.py
    import shelve
-   db = shelve.open("MyDB")
+   db = shelve.open("MyDB_made_with_shelve")
    for key in db:
        print(key,"=>",db[key])
    db.close()
@@ -1223,45 +1223,45 @@ VYKLADATSKA
 
 #+RESULTS:
 #+begin_example
-202 =>
+202 => 
         Аудиторія номер 202
         	Призначення Комп'ютерна
         	Кількість стільців 220, 0 з яких обладнано комп'ютером
-
-207 =>
+        
+207 => 
         Аудиторія номер 207
         	Призначення Комп'ютерна
         	Кількість стільців 270, 0 з яких обладнано комп'ютером
-
-3 =>
+        
+3 => 
         Аудиторія номер 3
         	Призначення Викладатська
         	Кількість стільців 30
         	Кафедра None
-301 =>
+301 => 
         Аудиторія номер 301
         	Призначення Лекційна
         	Кількість стільців 310
-
-302 =>
+        
+302 => 
         Аудиторія номер 302
         	Призначення Лекційна
         	Кількість стільців 320
-
-303 =>
+        
+303 => 
         Аудиторія номер 303
         	Призначення Лекційна
         	Кількість стільців 330
-
-403 =>
+        
+403 => 
         Аудиторія номер 403
         	Призначення Комп'ютерна
         	Кількість стільців 430, 0 з яких обладнано комп'ютером
-
+        
 #+end_example
 
 *** Модуль dbm
-#+begin_src python :results output :exports both :tangle  avramenko_3_var_1_step_6_dbm.py
+#+begin_src python :results none :exports both :tangle  avramenko_3_var_1_step_6_dbm.py
   import dbm
 
   from avramenko_3_var_1_step_5 import Audytoriya, Lekciyna, Computerna, Vykladatska
@@ -1278,58 +1278,16 @@ VYKLADATSKA
   #    VYKLADATSKA
   vykladatska_3 = Vykladatska(3, 30)
 
-  db = dbm.open("MyDB_made_wiht_dbm", 'n')
+  db = dbm.open("MyDB_made_with_dbm", 'n')
   for object in (lekciyna_301,lekciyna_302,lekciyna_303,computerna_202,computerna_207,computerna_403,vykladatska_3):
-      print(object)
       db[object.nomer]=str(object)
-  print(len(db))
   db.close
 #+end_src
-
-#+RESULTS:
-#+begin_example
-
-        Аудиторія номер 301
-        	Призначення Лекційна
-        	Кількість стільців 310
-
-
-        Аудиторія номер 302
-        	Призначення Лекційна
-        	Кількість стільців 320
-
-
-        Аудиторія номер 303
-        	Призначення Лекційна
-        	Кількість стільців 330
-
-
-        Аудиторія номер 202
-        	Призначення Комп'ютерна
-        	Кількість стільців 220, 0 з яких обладнано комп'ютером
-
-
-        Аудиторія номер 207
-        	Призначення Комп'ютерна
-        	Кількість стільців 270, 0 з яких обладнано комп'ютером
-
-
-        Аудиторія номер 403
-        	Призначення Комп'ютерна
-        	Кількість стільців 430, 0 з яких обладнано комп'ютером
-
-
-        Аудиторія номер 3
-        	Призначення Викладатська
-        	Кількість стільців 30
-        	Кафедра None
-7
-#+end_example
 
 #+begin_src python :results output :exports both :tangle avramenko_3_var_1_step_6_dbm_explore.py
   import dbm
 
-  db = dbm.open("MyDB_made_wiht_dbm", 'r')
+  db = dbm.open("MyDB_made_with_dbm", 'r')
   print(list(db.keys()))
   db_keys = list(db.keys())
   # for i in db_keys:

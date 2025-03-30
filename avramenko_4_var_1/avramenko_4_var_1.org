@@ -1,1 +1,131 @@
-#+TITLE: Бібліотека
+#+TITLE: Розробка додатків з графічним інтерфейсом на основі бібліотеки tkinter
+
+* Аудиторна частина
+** Приклади коду 17.1 - Радіокнопка
+#+begin_src python :results output :exports both :tangle avramenko_4_example_1.py
+  from tkinter import *
+
+  ventana = Tk()
+  V = IntVar(); m = IntVar()
+  ventana.title("Radiobutton")
+  ventana.geometry("200x150")
+
+  etiquental = Label(ventana, text = "Radio demos").place(x=20,y=20)
+
+  Color = Radiobutton(ventana,text="Color",variable=V,value=0).pack()
+  Query = Radiobutton(ventana,text="Query",variable=V,value=1).pack()
+  Input = Radiobutton(ventana,text="Input",variable=V,value=2).pack()
+  Open  = Radiobutton(ventana,text="Open", variable=V,value=3).pack()
+  Error = Radiobutton(ventana,text="Error",variable=V,value=4).pack()
+
+  ventana.mainloop()
+#+end_src
+
+#+RESULTS1:
+[[file:example_1.png]]
+
+** Приклади коду 17.2 - Кнопка
+*** 1.Quitter
+#+begin_src python :results output :exports both :tangle avramenko_4_example_2_Quitter.py
+  from tkinter import *
+  from tkinter.messagebox import askokcancel
+
+  class Quitter(Frame):
+      def __init__(self, parent=None):
+          Frame.__init__(self, parent)
+          self.pack()
+          widget = Button(self, text='Quit', command=self.destroy)
+          widget.pack(side=RIGHT, expand=YES, fill=BOTH)
+      def quit(self):
+          ans = askokcancel('Verify exit', "Really quit?")
+          if ans: Frame.destroy(self)
+  if __name__ == '__main__': Quitter().mainloop()
+#+end_src
+
+#+RESULTS1:
+[[file:example_2.png]]
+*** 2.User
+#+begin_src python :results output :exports both :tangle avramenko_4_example_2_User.py
+  from tkinter import *
+  from avramenko_4_example_2_Quitter import Quitter
+
+  def fetch():
+      print('Input ==> "%s"' % ent.get())
+
+  root = Tk()
+  ent = Entry(root)
+  ent.insert (0, 'Have a cigar')
+  ent.pack(side = TOP, fill=X)
+
+  ent.focus()
+  ent.bind('<Return>', (lambda event: fetch()))
+  btn = Button(root, text='Fetch', command=fetch)
+  btn.pack(side=LEFT)
+  Quitter(root).pack(side=RIGHT)
+  root.mainloop()
+#+end_src
+
+#+RESULTS1:
+[[file:example_2.2.png]]
+** Приклади коду 17.3 - Меню
+#+begin_src python :results output :exports both :tangle avramenko_4_example_3.py
+  from tkinter import *
+  root = Tk()
+
+  def sql():
+      fra.config(width = 200, height = 200)
+      print('200x200x')
+  def sq2
+#+end_src
+
+#+RESULTS1:
+[[file:example_3.png]]
+** Приклади коду 17.4
+#+begin_src python :results output :exports both :tangle avramenko_4_example_4.py
+#+end_src
+
+#+RESULTS1:
+[[file:example_4.png]]
+** Приклади коду 17.5
+#+begin_src python :results output :exports both :tangle avramenko_4_example_5.py
+#+end_src
+
+#+RESULTS1:
+[[file:example_5.png]]
+** Приклади коду 17.6
+#+begin_src python :results output :exports both :tangle avramenko_4_example_6.py
+#+end_src
+
+#+RESULTS1:
+[[file:example_6.png]]
+** Приклади коду 17.7
+#+begin_src python :results output :exports both :tangle avramenko_4_example_7.py
+#+end_src
+
+#+RESULTS1:
+[[file:example_7.png]]
+** Приклади коду 17.8
+#+begin_src python :results output :exports both :tangle avramenko_4_example_8.py
+#+end_src
+
+#+RESULTS1:
+[[file:example_8.png]]
+** Приклади коду 17.9
+#+begin_src python :results output :exports both :tangle avramenko_4_example_9.py
+#+end_src
+** Приклади коду 17.10
+#+begin_src python :results output :exports both :tangle avramenko_4_example_10.py
+#+end_src
+** Приклади коду 17.11
+#+begin_src python :results output :exports both :tangle avramenko_4_example_11.py
+#+end_src
+** Приклади коду 17.12
+#+begin_src python :results output :exports both :tangle avramenko_4_example_12.py
+#+end_src
+** Приклади коду 17.13
+#+begin_src python :results output :exports both :tangle avramenko_4_example_13.py
+#+end_src
+** Приклади коду 17.14
+#+begin_src python :results output :exports both :tangle avramenko_4_example_14.py
+#+end_src
+* Самостійна частина. Варіант 1

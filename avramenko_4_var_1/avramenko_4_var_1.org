@@ -68,18 +68,81 @@
 #+RESULTS1:
 [[file:example_2.2.png]]
 ** Приклади коду 17.3 - Меню
+*** 1
 #+begin_src python :results output :exports both :tangle avramenko_4_example_3.py
   from tkinter import *
-  root = Tk()
 
-  def sql():
-      fra.config(width = 200, height = 200)
-      print('200x200x')
-  def sq2
+  root = Tk()
+  def sq1():
+      fra.config(width=200,height=200)
+      print('200x200')
+  def sq2():
+      fra.config(width=400,height=400)
+      print('4000x4000')
+  fra = Frame(root,width=300,height=100,bg="Black")
+  fra.pack()
+  m = Menu(root)
+  root.config(menu=m)
+  cm = Menu(m)
+  m.add_cascade(label="File",menu=cm)
+  sm = Menu(m)
+  m.add_cascade(label="Edit",menu=sm)
+  sm.add_command(label="200x200",command=sq1)
+  sm.add_command(label="4000x4000",command=sq2)
+  root.mainloop()
 #+end_src
 
+#+RESULTS:
+: 200x200
+
 #+RESULTS1:
-[[file:example_3.png]]
+[[file:example_3.1.png]] ==> [[file:example_3.2.png]] ==> [[file:example_3.3.png]]
+*** 2
+#+begin_src python :results output :exports both :tangle avramenko_4_example_3_2.py
+  from tkinter import *
+  from tkinter.filedialog import *
+  import fileinput
+  from tkinter.messagebox import *
+
+  def close_win():
+      if askyesno("Exit", "Do you want to quit?"):
+          root.destroy()
+  def about():
+      showinfo("Editor", "This is text editor.\n(test version)")
+  def _open():
+      op = askopenfilename()
+      for l in fileinput.input(op):
+          txt.insert(END,l)
+  def _save():
+      sa = asksaveasfilename()
+      letter = txt.get(1.0,END)
+      f = open(sa,"w")
+      f.write(letter)
+      f.close()
+  root = Tk()
+  m = Menu(root)
+  root.config(menu=m)
+  fm = Menu(m)
+  m.add_cascade(label="File",menu=fm)
+  fm.add_command(label="Open...",command=_open)
+  fm.add_command(label="Save...",command=_save)
+  fm.add_command(label="Exit",command=close_win)
+
+  hm = Menu(m)
+  m.add_cascade(label="Help",menu=hm)
+  hm.add_command(label="About",command=about)
+
+  txt = Text(root,width=40,height=15,font="12")
+  txt.pack()
+
+  root.mainloop()
+#+end_src
+
+#+RESULTS:
+
+#+RESULTS1:
+[[file:example_3.4.png]] [[file:example_3.5.png]]
+
 ** Приклади коду 17.4
 #+begin_src python :results output :exports both :tangle avramenko_4_example_4.py
 #+end_src

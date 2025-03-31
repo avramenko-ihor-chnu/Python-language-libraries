@@ -142,53 +142,174 @@
 
 #+RESULTS1:
 [[file:example_3.4.png]] [[file:example_3.5.png]]
+*** 3
 
-** Приклади коду 17.4
-#+begin_src python :results output :exports both :tangle avramenko_4_example_4.py
+#+begin_src python :results output :exports both :tangle avramenko_4_example_3_3.py
+  from tkinter import *
+
+  root = Tk()
+  m = Menu(root)
+  root.config(menu=m)
+
+  fm = Menu(m)
+  m.add_cascade(label="File",menu=fm)
+  fm.add_command(label="Open...")
+  fm.add_command(label="New")
+  fm.add_command(label="Save...")
+  fm.add_command(label="Exit")
+  hm = Menu(m)
+  m.add_cascade(label="Help",menu=hm)
+  hm.add_command(label="Help")
+  hm.add_command(label="About")
+  root.mainloop() #main ==> mainloop
 #+end_src
 
 #+RESULTS1:
-[[file:example_4.png]]
-** Приклади коду 17.5
+[[file:example_3.6.png]] [[file:example_3.7.png]]
+** Приклади коду 17.4 - Смуга проктутки
+*** 1-ша програма
+#+begin_src python :results output :exports both :tangle avramenko_4_example_4_1.py
+  from tkinter import *
+
+  def printer(event):
+      x = var.get()
+      print(x)
+  root = Tk()
+  var = IntVar()
+  var.set(5)
+  sca1 = Scale(root,orient=VERTICAL,length=200,
+               from_=0,to=10,tickinterval=2,resolution=1,
+               variable=var)
+  sca2 = Scale(root,orient=HORIZONTAL,length=200,
+               from_=0,to=10,tickinterval=2,resolution=1,
+               variable=var)
+  lab=Label(root, text='Лабораторна робота \n Graphical User Interface', font='Arial 18')
+  but=Button(root, text='Дізнитися значення змінної',width=30,height=3,
+  bg='grey',fg='red',font='Arial 12')
+  but.bind('<Button-1>',printer)
+  lab.pack()
+  sca1.pack()
+  sca2.pack()
+  but.pack()
+  root.mainloop()
+#+end_src
+
+#+RESULTS1:
+[[file:example_4.1.png]]
+*** 2-ша програма
+#+begin_src python :results output :exports both :tangle avramenko_4_example_4_2.py
+  from tkinter import *
+  root = Tk()
+  myscrollbar = Scrollbar(root)
+  myscrollbar.pack(side=RIGHT, fill=Y)
+
+  mylistbox = Listbox(root, yscrollcommand = myscrollbar.set)
+  for a in range(20):
+      mylistbox.insert(END,'Lumberjack-' + str(a))
+  mylistbox.pack(side=LEFT, fill=BOTH)
+  myscrollbar.config(command=mylistbox.yview)
+  root.mainloop()
+#+end_src
+
+#+RESULTS1:
+[[file:example_4.2.png]]
+** Приклади коду 17.5 - Завантаження текстового файлу у редактор
 #+begin_src python :results output :exports both :tangle avramenko_4_example_5.py
+  from tkinter import *
+  import tkinter.filedialog
+
+  def LoadFile(ev):
+      fn=tkinter.filedialog.Open(root, filetypes=[('*.md files', '.md')]).show()
+      if fn == '':
+          return
+      textbox.delete('1.0', 'end')
+      textbox.insert('1.0', open(fn, 'rt').read())
+
+  root = Tk()
+
+  panelFrame = Frame(root, height = 20, bg = 'blue')
+  textFrame = Frame(root, height = 40, width = 50)
+
+  panelFrame.pack(side = 'top', fill = 'x')
+  textFrame.pack(side = 'bottom', fill = 'both', expand = 1)
+
+  textbox = Text(textFrame, font='Arial 12', wrap='word')
+  scrollbar = Scrollbar(textFrame)
+  scrollbar['command'] = textbox.yview
+  textbox['yscrollcommand'] = scrollbar.set
+
+  textbox.pack(side = 'left', fill = 'both', expand = 1)
+  scrollbar.pack(side = 'right', fill = 'y')
+
+  loadBtn = Button(panelFrame, text = 'Open')
+  loadBtn.bind("<Button-1>", LoadFile)
+  loadBtn.place(x = 10, y = 1, width = 40, height = 20)
+  root.mainloop()
 #+end_src
 
+#+RESULTS:
+
 #+RESULTS1:
-[[file:example_5.png]]
-** Приклади коду 17.6
+[[file:example_5.1.png]]
+[[file:example_5.2.png]]
+** Приклади коду 17.6 - Геометричні фігури
+При натисканні на кнопку =Трикутник=, =Прямокутник= тощо, на полотні з‘являється
+відповідна фігура, а в текстовому полі її визначення. При клацанні на фігурі,
+яка розташована на полотні, вона змінюється на іншу, що теж відноситься до тієї
+ж групи (наприклад, трикутники – прямокутні або рівносторонні). Внизу полотна
+з'являються пояснення, що характеризують чергову фігуру (наприклад, «прямокутний
+трикутник»). Можна отримати частини фігури (для трикутника це сторони), щоб
+продемонструвати, як вони утворюються
 #+begin_src python :results output :exports both :tangle avramenko_4_example_6.py
+  i = 0
+  def add_triangle(event):
+      coords = [(50,130,290,40,170,250),(10,10,290,30,200,250),
+                (30,280,330,60,300,200),(50,200,340,200,110,60)]
+      colors = ['red','green','blue','yellow']
+      global i
+      canvas.itemconfig(t,fill=colors[i],outline='white')
+      canvas.coords(t,coords[i])
+      i += 1
+      if i == 4:
+        i = 0
+  def triangle():
+      canvas.coords(r,(0,0,0,0))
+      canvas.itemconfig(t,fill='yellow',outline='white')
+      canvas.coords(t,(50,200,340,200,110,60))
+      text.delete(1.0,END)
+      text.insert(1.0,'Трикутник - геометрична фігура утворена сполученням трьох точок, що не лежать одній прямій')
+      text.tag_add('title','1.0','1.end')
+      text.tag_config('title',font=('Times',14),foreground='red')
+  def rectangle():
+      canvas.coords(t,(0,0,0,0,0,0))
+      canvas.itemconfig(r,fill='lightblue',outline='white')
+      canvas.coords(r,(80,50,360,200))
+      text.insert(1.0,'Прямокутник - гометрична фігура. Частоковий випадок паралелеграма')
+      text.tag_add('title','1.0','1.end')
+      text.tag_config('title',font=('Times',14),foreground='red')
+  def ellipse(): pass
+
+  from tkinter import *
+  win = Tk()
+  b_triangle = Button(text="Трикутник", width=15,command=triangle)
+  b_rectangle = Button(text="Прямокутник",
+                       width=15,command=rectangle)
+  b_ellipse = Button(text="Еліпс", width=15,command=ellipse)
+  canvas = Canvas(width=400,height=300,bg='#222222')
+  text = Text(width=55,height=5,bg='#ffffff',wrap=WORD)
+  t = canvas.create_polygon(0,0,0,0,0,0)
+  canvas.tag_bind(t,'<Button-1>',add_triangle)
+  r = canvas.create_rectangle(0,0,0,0)
+  b_triangle.grid(row=0,column=0)
+  b_rectangle.grid(row=1,column=0)
+  b_ellipse.grid(row=2,column=0)
+  canvas.grid(row=0,column=1,rowspan=10)
+  text.grid(row=11,column=1,rowspan=3)
+  win.mainloop()
 #+end_src
+
+#+RESULTS:
 
 #+RESULTS1:
 [[file:example_6.png]]
-** Приклади коду 17.7
-#+begin_src python :results output :exports both :tangle avramenko_4_example_7.py
-#+end_src
-
-#+RESULTS1:
-[[file:example_7.png]]
-** Приклади коду 17.8
-#+begin_src python :results output :exports both :tangle avramenko_4_example_8.py
-#+end_src
-
-#+RESULTS1:
-[[file:example_8.png]]
-** Приклади коду 17.9
-#+begin_src python :results output :exports both :tangle avramenko_4_example_9.py
-#+end_src
-** Приклади коду 17.10
-#+begin_src python :results output :exports both :tangle avramenko_4_example_10.py
-#+end_src
-** Приклади коду 17.11
-#+begin_src python :results output :exports both :tangle avramenko_4_example_11.py
-#+end_src
-** Приклади коду 17.12
-#+begin_src python :results output :exports both :tangle avramenko_4_example_12.py
-#+end_src
-** Приклади коду 17.13
-#+begin_src python :results output :exports both :tangle avramenko_4_example_13.py
-#+end_src
-** Приклади коду 17.14
-#+begin_src python :results output :exports both :tangle avramenko_4_example_14.py
-#+end_src
 * Самостійна частина. Варіант 1

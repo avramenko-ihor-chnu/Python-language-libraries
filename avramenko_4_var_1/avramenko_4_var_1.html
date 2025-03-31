@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2025-03-31 Mon 02:37 -->
+<!-- 2025-03-31 Mon 04:15 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Розробка додатків з графічним інтерфейсом на основі бібліотеки tkinter</title>
@@ -201,282 +201,436 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org1a6b945">1. Аудиторна частина</a>
+<li><a href="#orgcefabd5">1. Аудиторна частина</a>
 <ul>
-<li><a href="#org6e42fda">1.1. Приклади коду 17.1 - Радіокнопка</a></li>
-<li><a href="#org2844921">1.2. Приклади коду 17.2 - Кнопка</a>
+<li><a href="#org497b904">1.1. Приклади коду 17.1 - Радіокнопка</a></li>
+<li><a href="#orge5726ff">1.2. Приклади коду 17.2 - Кнопка</a>
 <ul>
-<li><a href="#org14d4630">1.2.1. 1.Quitter</a></li>
-<li><a href="#org96bf9d9">1.2.2. 2.User</a></li>
+<li><a href="#orga3dcfac">1.2.1. 1.Quitter</a></li>
+<li><a href="#org9f18d0a">1.2.2. 2.User</a></li>
 </ul>
 </li>
-<li><a href="#org2d393b6">1.3. Приклади коду 17.3</a></li>
-<li><a href="#orgcc83e11">1.4. Приклади коду 17.4</a></li>
-<li><a href="#org5f38d8f">1.5. Приклади коду 17.5</a></li>
-<li><a href="#org4500fe7">1.6. Приклади коду 17.6</a></li>
-<li><a href="#org5a3d3c8">1.7. Приклади коду 17.7</a></li>
-<li><a href="#org90b2c02">1.8. Приклади коду 17.8</a></li>
-<li><a href="#org6a662a8">1.9. Приклади коду 17.9</a></li>
-<li><a href="#org0b90590">1.10. Приклади коду 17.10</a></li>
-<li><a href="#org96302a6">1.11. Приклади коду 17.11</a></li>
-<li><a href="#orge04621f">1.12. Приклади коду 17.12</a></li>
-<li><a href="#org3e315fe">1.13. Приклади коду 17.13</a></li>
-<li><a href="#orgbad9392">1.14. Приклади коду 17.14</a></li>
+<li><a href="#orgc109f3b">1.3. Приклади коду 17.3 - Меню</a>
+<ul>
+<li><a href="#orga08a0f7">1.3.1. 1</a></li>
+<li><a href="#org86ed0d0">1.3.2. 2</a></li>
+<li><a href="#org91ca8e5">1.3.3. 3</a></li>
 </ul>
 </li>
-<li><a href="#orgd4b8aa1">2. Самостійна частина. Варіант 1</a></li>
+<li><a href="#org2322fb4">1.4. Приклади коду 17.4 - Смуга проктутки</a>
+<ul>
+<li><a href="#orgdc34e09">1.4.1. 1-ша програма</a></li>
+<li><a href="#org738fb41">1.4.2. 2-ша програма</a></li>
+</ul>
+</li>
+<li><a href="#org39f47ce">1.5. Приклади коду 17.5 - Завантаження текстового файлу у редактор</a></li>
+<li><a href="#orge522bb3">1.6. Приклади коду 17.6 - Геометричні фігури</a></li>
+</ul>
+</li>
+<li><a href="#orgcccf0d6">2. Самостійна частина. Варіант 1</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1a6b945" class="outline-2">
-<h2 id="org1a6b945"><span class="section-number-2">1.</span> Аудиторна частина</h2>
+<div id="outline-container-orgcefabd5" class="outline-2">
+<h2 id="orgcefabd5"><span class="section-number-2">1.</span> Аудиторна частина</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org6e42fda" class="outline-3">
-<h3 id="org6e42fda"><span class="section-number-3">1.1.</span> Приклади коду 17.1 - Радіокнопка</h3>
+<div id="outline-container-org497b904" class="outline-3">
+<h3 id="org497b904"><span class="section-number-3">1.1.</span> Приклади коду 17.1 - Радіокнопка</h3>
 <div class="outline-text-3" id="text-1-1">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #ff6f9f;">from</span> tkinter <span style="color: #ff6f9f;">import</span> *
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
 
-<span style="color: #6ae4b9;">ventana</span> = Tk<span style="color: #00d3d0;">()</span>
-<span style="color: #6ae4b9;">V</span> = IntVar<span style="color: #00d3d0;">()</span>; <span style="color: #6ae4b9;">m</span> = IntVar<span style="color: #00d3d0;">()</span>
-ventana.title<span style="color: #00d3d0;">(</span><span style="color: #00d3d0;">"Radiobutton"</span><span style="color: #00d3d0;">)</span>
-ventana.geometry<span style="color: #00d3d0;">(</span><span style="color: #00d3d0;">"200x150"</span><span style="color: #00d3d0;">)</span>
+<span style="color: #005e8b;">ventana</span> = Tk<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">V</span> = IntVar<span style="color: #000000;">()</span>; <span style="color: #005e8b;">m</span> = IntVar<span style="color: #000000;">()</span>
+ventana.title<span style="color: #000000;">(</span><span style="color: #3548cf;">"Radiobutton"</span><span style="color: #000000;">)</span>
+ventana.geometry<span style="color: #000000;">(</span><span style="color: #3548cf;">"200x150"</span><span style="color: #000000;">)</span>
 
-<span style="color: #6ae4b9;">etiquental</span> = Label<span style="color: #00d3d0;">(</span>ventana, text = <span style="color: #00d3d0;">"Radio demos"</span><span style="color: #00d3d0;">)</span>.place<span style="color: #00d3d0;">(</span>x=<span style="color: #88ca9f;">20</span>,y=<span style="color: #88ca9f;">20</span><span style="color: #00d3d0;">)</span>
+<span style="color: #005e8b;">etiquental</span> = Label<span style="color: #000000;">(</span>ventana, text = <span style="color: #3548cf;">"Radio demos"</span><span style="color: #000000;">)</span>.place<span style="color: #000000;">(</span>x=<span style="color: #0000b0;">20</span>,y=<span style="color: #0000b0;">20</span><span style="color: #000000;">)</span>
 
-<span style="color: #6ae4b9;">Color</span> = Radiobutton<span style="color: #00d3d0;">(</span>ventana,text=<span style="color: #00d3d0;">"Color"</span>,variable=V,value=<span style="color: #88ca9f;">0</span><span style="color: #00d3d0;">)</span>.pack<span style="color: #00d3d0;">()</span>
-<span style="color: #6ae4b9;">Query</span> = Radiobutton<span style="color: #00d3d0;">(</span>ventana,text=<span style="color: #00d3d0;">"Query"</span>,variable=V,value=<span style="color: #88ca9f;">1</span><span style="color: #00d3d0;">)</span>.pack<span style="color: #00d3d0;">()</span>
-<span style="color: #6ae4b9;">Input</span> = Radiobutton<span style="color: #00d3d0;">(</span>ventana,text=<span style="color: #00d3d0;">"Input"</span>,variable=V,value=<span style="color: #88ca9f;">2</span><span style="color: #00d3d0;">)</span>.pack<span style="color: #00d3d0;">()</span>
-<span style="color: #6ae4b9;">Open</span>  = Radiobutton<span style="color: #00d3d0;">(</span>ventana,text=<span style="color: #00d3d0;">"Open"</span>, variable=V,value=<span style="color: #88ca9f;">3</span><span style="color: #00d3d0;">)</span>.pack<span style="color: #00d3d0;">()</span>
-<span style="color: #6ae4b9;">Error</span> = Radiobutton<span style="color: #00d3d0;">(</span>ventana,text=<span style="color: #00d3d0;">"Error"</span>,variable=V,value=<span style="color: #88ca9f;">4</span><span style="color: #00d3d0;">)</span>.pack<span style="color: #00d3d0;">()</span>
+<span style="color: #005e8b;">Color</span> = Radiobutton<span style="color: #000000;">(</span>ventana,text=<span style="color: #3548cf;">"Color"</span>,variable=V,value=<span style="color: #0000b0;">0</span><span style="color: #000000;">)</span>.pack<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">Query</span> = Radiobutton<span style="color: #000000;">(</span>ventana,text=<span style="color: #3548cf;">"Query"</span>,variable=V,value=<span style="color: #0000b0;">1</span><span style="color: #000000;">)</span>.pack<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">Input</span> = Radiobutton<span style="color: #000000;">(</span>ventana,text=<span style="color: #3548cf;">"Input"</span>,variable=V,value=<span style="color: #0000b0;">2</span><span style="color: #000000;">)</span>.pack<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">Open</span>  = Radiobutton<span style="color: #000000;">(</span>ventana,text=<span style="color: #3548cf;">"Open"</span>, variable=V,value=<span style="color: #0000b0;">3</span><span style="color: #000000;">)</span>.pack<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">Error</span> = Radiobutton<span style="color: #000000;">(</span>ventana,text=<span style="color: #3548cf;">"Error"</span>,variable=V,value=<span style="color: #0000b0;">4</span><span style="color: #000000;">)</span>.pack<span style="color: #000000;">()</span>
 
-ventana.mainloop<span style="color: #00d3d0;">()</span>
+ventana.mainloop<span style="color: #000000;">()</span>
 </pre>
 </div>
 
 
-<div id="orgcf6a42f" class="figure">
+<div id="orgca2fa73" class="figure">
 <p><img src="example_1.png" alt="example_1.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org2844921" class="outline-3">
-<h3 id="org2844921"><span class="section-number-3">1.2.</span> Приклади коду 17.2 - Кнопка</h3>
+<div id="outline-container-orge5726ff" class="outline-3">
+<h3 id="orge5726ff"><span class="section-number-3">1.2.</span> Приклади коду 17.2 - Кнопка</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
-<div id="outline-container-org14d4630" class="outline-4">
-<h4 id="org14d4630"><span class="section-number-4">1.2.1.</span> 1.Quitter</h4>
+<div id="outline-container-orga3dcfac" class="outline-4">
+<h4 id="orga3dcfac"><span class="section-number-4">1.2.1.</span> 1.Quitter</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #ff6f9f;">from</span> tkinter <span style="color: #ff6f9f;">import</span> *
-<span style="color: #ff6f9f;">from</span> tkinter.messagebox <span style="color: #ff6f9f;">import</span> askokcancel
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+<span style="color: #531ab6;">from</span> tkinter.messagebox <span style="color: #531ab6;">import</span> askokcancel
 
-<span style="color: #ff6f9f;">class</span> <span style="color: #79a8ff;">Quitter</span><span style="color: #00d3d0;">(</span>Frame<span style="color: #00d3d0;">)</span>:
-    <span style="color: #ff6f9f;">def</span> <span style="color: #4ae2ff;">__init__</span><span style="color: #00d3d0;">(</span><span style="color: #ff6f9f;">self</span>, parent=<span style="color: #88ca9f;">None</span><span style="color: #00d3d0;">)</span>:
-        Frame.__init__<span style="color: #00d3d0;">(</span><span style="color: #ff6f9f;">self</span>, parent<span style="color: #00d3d0;">)</span>
-        <span style="color: #ff6f9f;">self</span>.pack<span style="color: #00d3d0;">()</span>
-        <span style="color: #6ae4b9;">widget</span> = Button<span style="color: #00d3d0;">(</span><span style="color: #ff6f9f;">self</span>, text=<span style="color: #00d3d0;">'Quit'</span>, command=<span style="color: #ff6f9f;">self</span>.destroy<span style="color: #00d3d0;">)</span>
-        widget.pack<span style="color: #00d3d0;">(</span>side=RIGHT, expand=YES, fill=BOTH<span style="color: #00d3d0;">)</span>
-    <span style="color: #ff6f9f;">def</span> <span style="color: #4ae2ff;">quit</span><span style="color: #00d3d0;">(</span><span style="color: #ff6f9f;">self</span><span style="color: #00d3d0;">)</span>:
-        <span style="color: #6ae4b9;">ans</span> = askokcancel<span style="color: #00d3d0;">(</span><span style="color: #00d3d0;">'Verify exit'</span>, <span style="color: #00d3d0;">"Really quit?"</span><span style="color: #00d3d0;">)</span>
-        <span style="color: #ff6f9f;">if</span> ans: Frame.destroy<span style="color: #00d3d0;">(</span><span style="color: #ff6f9f;">self</span><span style="color: #00d3d0;">)</span>
-<span style="color: #ff6f9f;">if</span> <span style="color: #feacd0;">__name__</span> == <span style="color: #00d3d0;">'__main__'</span>: Quitter<span style="color: #00d3d0;">()</span>.mainloop<span style="color: #00d3d0;">()</span>
+<span style="color: #531ab6;">class</span> <span style="color: #005f5f;">Quitter</span><span style="color: #000000;">(</span>Frame<span style="color: #000000;">)</span>:
+    <span style="color: #531ab6;">def</span> <span style="color: #721045;">__init__</span><span style="color: #000000;">(</span><span style="color: #531ab6;">self</span>, parent=<span style="color: #0000b0;">None</span><span style="color: #000000;">)</span>:
+        Frame.__init__<span style="color: #000000;">(</span><span style="color: #531ab6;">self</span>, parent<span style="color: #000000;">)</span>
+        <span style="color: #531ab6;">self</span>.pack<span style="color: #000000;">()</span>
+        <span style="color: #005e8b;">widget</span> = Button<span style="color: #000000;">(</span><span style="color: #531ab6;">self</span>, text=<span style="color: #3548cf;">'Quit'</span>, command=<span style="color: #531ab6;">self</span>.destroy<span style="color: #000000;">)</span>
+        widget.pack<span style="color: #000000;">(</span>side=RIGHT, expand=YES, fill=BOTH<span style="color: #000000;">)</span>
+    <span style="color: #531ab6;">def</span> <span style="color: #721045;">quit</span><span style="color: #000000;">(</span><span style="color: #531ab6;">self</span><span style="color: #000000;">)</span>:
+        <span style="color: #005e8b;">ans</span> = askokcancel<span style="color: #000000;">(</span><span style="color: #3548cf;">'Verify exit'</span>, <span style="color: #3548cf;">"Really quit?"</span><span style="color: #000000;">)</span>
+        <span style="color: #531ab6;">if</span> ans: Frame.destroy<span style="color: #000000;">(</span><span style="color: #531ab6;">self</span><span style="color: #000000;">)</span>
+<span style="color: #531ab6;">if</span> <span style="color: #8f0075;">__name__</span> == <span style="color: #3548cf;">'__main__'</span>: Quitter<span style="color: #000000;">()</span>.mainloop<span style="color: #000000;">()</span>
 </pre>
 </div>
 
 
-<div id="org16d581e" class="figure">
+<div id="org601d5a3" class="figure">
 <p><img src="example_2.png" alt="example_2.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org96bf9d9" class="outline-4">
-<h4 id="org96bf9d9"><span class="section-number-4">1.2.2.</span> 2.User</h4>
+<div id="outline-container-org9f18d0a" class="outline-4">
+<h4 id="org9f18d0a"><span class="section-number-4">1.2.2.</span> 2.User</h4>
 <div class="outline-text-4" id="text-1-2-2">
 <div class="org-src-container">
-<pre class="src src-python"><span style="color: #ff6f9f;">from</span> tkinter <span style="color: #ff6f9f;">import</span> *
-<span style="color: #ff6f9f;">from</span> avramenko_4_example_2_Quitter <span style="color: #ff6f9f;">import</span> Quitter
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+<span style="color: #531ab6;">from</span> avramenko_4_example_2_Quitter <span style="color: #531ab6;">import</span> Quitter
 
-<span style="color: #ff6f9f;">def</span> <span style="color: #4ae2ff;">fetch</span><span style="color: #00d3d0;">()</span>:
-    <span style="color: #feacd0;">print</span><span style="color: #00d3d0;">(</span><span style="color: #00d3d0;">'Input ==&gt; "%s"'</span> % ent.get<span style="color: #ff5f59;">()</span><span style="color: #00d3d0;">)</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">fetch</span><span style="color: #000000;">()</span>:
+    <span style="color: #8f0075;">print</span><span style="color: #000000;">(</span><span style="color: #3548cf;">'Input ==&gt; "%s"'</span> % ent.get<span style="color: #dd22dd;">()</span><span style="color: #000000;">)</span>
 
-<span style="color: #6ae4b9;">root</span> = Tk<span style="color: #00d3d0;">()</span>
-<span style="color: #6ae4b9;">ent</span> = Entry<span style="color: #00d3d0;">(</span>root<span style="color: #00d3d0;">)</span>
-ent.insert <span style="color: #00d3d0;">(</span><span style="color: #88ca9f;">0</span>, <span style="color: #00d3d0;">'Have a cigar'</span><span style="color: #00d3d0;">)</span>
-ent.pack<span style="color: #00d3d0;">(</span>side = TOP, fill=X<span style="color: #00d3d0;">)</span>
+<span style="color: #005e8b;">root</span> = Tk<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">ent</span> = Entry<span style="color: #000000;">(</span>root<span style="color: #000000;">)</span>
+ent.insert <span style="color: #000000;">(</span><span style="color: #0000b0;">0</span>, <span style="color: #3548cf;">'Have a cigar'</span><span style="color: #000000;">)</span>
+ent.pack<span style="color: #000000;">(</span>side = TOP, fill=X<span style="color: #000000;">)</span>
 
-ent.focus<span style="color: #00d3d0;">()</span>
-ent.bind<span style="color: #00d3d0;">(</span><span style="color: #00d3d0;">'&lt;Return&gt;'</span>, <span style="color: #ff5f59;">(</span><span style="color: #ff6f9f;">lambda</span> event: fetch<span style="color: #4ae2ff;">()</span><span style="color: #ff5f59;">)</span><span style="color: #00d3d0;">)</span>
-<span style="color: #6ae4b9;">btn</span> = Button<span style="color: #00d3d0;">(</span>root, text=<span style="color: #00d3d0;">'Fetch'</span>, command=fetch<span style="color: #00d3d0;">)</span>
-btn.pack<span style="color: #00d3d0;">(</span>side=LEFT<span style="color: #00d3d0;">)</span>
-Quitter<span style="color: #00d3d0;">(</span>root<span style="color: #00d3d0;">)</span>.pack<span style="color: #00d3d0;">(</span>side=RIGHT<span style="color: #00d3d0;">)</span>
-root.mainloop<span style="color: #00d3d0;">()</span>
+ent.focus<span style="color: #000000;">()</span>
+ent.bind<span style="color: #000000;">(</span><span style="color: #3548cf;">'&lt;Return&gt;'</span>, <span style="color: #dd22dd;">(</span><span style="color: #531ab6;">lambda</span> event: fetch<span style="color: #008899;">()</span><span style="color: #dd22dd;">)</span><span style="color: #000000;">)</span>
+<span style="color: #005e8b;">btn</span> = Button<span style="color: #000000;">(</span>root, text=<span style="color: #3548cf;">'Fetch'</span>, command=fetch<span style="color: #000000;">)</span>
+btn.pack<span style="color: #000000;">(</span>side=LEFT<span style="color: #000000;">)</span>
+Quitter<span style="color: #000000;">(</span>root<span style="color: #000000;">)</span>.pack<span style="color: #000000;">(</span>side=RIGHT<span style="color: #000000;">)</span>
+root.mainloop<span style="color: #000000;">()</span>
 </pre>
 </div>
 
 
-<div id="orgd1a055e" class="figure">
+<div id="org8a11031" class="figure">
 <p><img src="example_2.2.png" alt="example_2.2.png" />
 </p>
 </div>
 </div>
 </div>
 </div>
-<div id="outline-container-org2d393b6" class="outline-3">
-<h3 id="org2d393b6"><span class="section-number-3">1.3.</span> Приклади коду 17.3</h3>
+<div id="outline-container-orgc109f3b" class="outline-3">
+<h3 id="orgc109f3b"><span class="section-number-3">1.3.</span> Приклади коду 17.3 - Меню</h3>
 <div class="outline-text-3" id="text-1-3">
+</div>
+<div id="outline-container-orga08a0f7" class="outline-4">
+<h4 id="orga08a0f7"><span class="section-number-4">1.3.1.</span> 1</h4>
+<div class="outline-text-4" id="text-1-3-1">
 <div class="org-src-container">
-<pre class="src src-python">
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+
+<span style="color: #005e8b;">root</span> = Tk<span style="color: #000000;">()</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">sq1</span><span style="color: #000000;">()</span>:
+    fra.config<span style="color: #000000;">(</span>width=<span style="color: #0000b0;">200</span>,height=<span style="color: #0000b0;">200</span><span style="color: #000000;">)</span>
+    <span style="color: #8f0075;">print</span><span style="color: #000000;">(</span><span style="color: #3548cf;">'200x200'</span><span style="color: #000000;">)</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">sq2</span><span style="color: #000000;">()</span>:
+    fra.config<span style="color: #000000;">(</span>width=<span style="color: #0000b0;">400</span>,height=<span style="color: #0000b0;">400</span><span style="color: #000000;">)</span>
+    <span style="color: #8f0075;">print</span><span style="color: #000000;">(</span><span style="color: #3548cf;">'4000x4000'</span><span style="color: #000000;">)</span>
+<span style="color: #005e8b;">fra</span> = Frame<span style="color: #000000;">(</span>root,width=<span style="color: #0000b0;">300</span>,height=<span style="color: #0000b0;">100</span>,bg=<span style="color: #3548cf;">"Black"</span><span style="color: #000000;">)</span>
+fra.pack<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">m</span> = Menu<span style="color: #000000;">(</span>root<span style="color: #000000;">)</span>
+root.config<span style="color: #000000;">(</span>menu=m<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">cm</span> = Menu<span style="color: #000000;">(</span>m<span style="color: #000000;">)</span>
+m.add_cascade<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"File"</span>,menu=cm<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">sm</span> = Menu<span style="color: #000000;">(</span>m<span style="color: #000000;">)</span>
+m.add_cascade<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Edit"</span>,menu=sm<span style="color: #000000;">)</span>
+sm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"200x200"</span>,command=sq1<span style="color: #000000;">)</span>
+sm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"4000x4000"</span>,command=sq2<span style="color: #000000;">)</span>
+root.mainloop<span style="color: #000000;">()</span>
 </pre>
 </div>
 
+<pre class="example">
+200x200
+</pre>
 
-<div id="org34e166c" class="figure">
-<p><img src="example_3.png" alt="example_3.png" />
+
+<p>
+<img src="example_3.1.png" alt="example_3.1.png" /> ==&gt; <img src="example_3.2.png" alt="example_3.2.png" /> ==&gt; <img src="example_3.3.png" alt="example_3.3.png" />
+</p>
+</div>
+</div>
+<div id="outline-container-org86ed0d0" class="outline-4">
+<h4 id="org86ed0d0"><span class="section-number-4">1.3.2.</span> 2</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+<span style="color: #531ab6;">from</span> tkinter.filedialog <span style="color: #531ab6;">import</span> *
+<span style="color: #531ab6;">import</span> fileinput
+<span style="color: #531ab6;">from</span> tkinter.messagebox <span style="color: #531ab6;">import</span> *
+
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">close_win</span><span style="color: #000000;">()</span>:
+    <span style="color: #531ab6;">if</span> askyesno<span style="color: #000000;">(</span><span style="color: #3548cf;">"Exit"</span>, <span style="color: #3548cf;">"Do you want to quit?"</span><span style="color: #000000;">)</span>:
+        root.destroy<span style="color: #000000;">()</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">about</span><span style="color: #000000;">()</span>:
+    showinfo<span style="color: #000000;">(</span><span style="color: #3548cf;">"Editor"</span>, <span style="color: #3548cf;">"This is text editor.</span><span style="color: #0000b0;">\n</span><span style="color: #3548cf;">(test version)"</span><span style="color: #000000;">)</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">_open</span><span style="color: #000000;">()</span>:
+    <span style="color: #005e8b;">op</span> = askopenfilename<span style="color: #000000;">()</span>
+    <span style="color: #531ab6;">for</span> l <span style="color: #531ab6;">in</span> fileinput.<span style="color: #8f0075;">input</span><span style="color: #000000;">(</span>op<span style="color: #000000;">)</span>:
+        txt.insert<span style="color: #000000;">(</span>END,l<span style="color: #000000;">)</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">_save</span><span style="color: #000000;">()</span>:
+    <span style="color: #005e8b;">sa</span> = asksaveasfilename<span style="color: #000000;">()</span>
+    <span style="color: #005e8b;">letter</span> = txt.get<span style="color: #000000;">(</span><span style="color: #0000b0;">1</span>.<span style="color: #0000b0;">0</span>,END<span style="color: #000000;">)</span>
+    <span style="color: #005e8b;">f</span> = <span style="color: #8f0075;">open</span><span style="color: #000000;">(</span>sa,<span style="color: #3548cf;">"w"</span><span style="color: #000000;">)</span>
+    f.write<span style="color: #000000;">(</span>letter<span style="color: #000000;">)</span>
+    f.close<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">root</span> = Tk<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">m</span> = Menu<span style="color: #000000;">(</span>root<span style="color: #000000;">)</span>
+root.config<span style="color: #000000;">(</span>menu=m<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">fm</span> = Menu<span style="color: #000000;">(</span>m<span style="color: #000000;">)</span>
+m.add_cascade<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"File"</span>,menu=fm<span style="color: #000000;">)</span>
+fm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Open..."</span>,command=_open<span style="color: #000000;">)</span>
+fm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Save..."</span>,command=_save<span style="color: #000000;">)</span>
+fm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Exit"</span>,command=close_win<span style="color: #000000;">)</span>
+
+<span style="color: #005e8b;">hm</span> = Menu<span style="color: #000000;">(</span>m<span style="color: #000000;">)</span>
+m.add_cascade<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Help"</span>,menu=hm<span style="color: #000000;">)</span>
+hm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"About"</span>,command=about<span style="color: #000000;">)</span>
+
+<span style="color: #005e8b;">txt</span> = Text<span style="color: #000000;">(</span>root,width=<span style="color: #0000b0;">40</span>,height=<span style="color: #0000b0;">15</span>,font=<span style="color: #3548cf;">"12"</span><span style="color: #000000;">)</span>
+txt.pack<span style="color: #000000;">()</span>
+
+root.mainloop<span style="color: #000000;">()</span>
+</pre>
+</div>
+
+<p>
+<img src="example_3.4.png" alt="example_3.4.png" /> <img src="example_3.5.png" alt="example_3.5.png" />
+</p>
+</div>
+</div>
+<div id="outline-container-org91ca8e5" class="outline-4">
+<h4 id="org91ca8e5"><span class="section-number-4">1.3.3.</span> 3</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+
+<span style="color: #005e8b;">root</span> = Tk<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">m</span> = Menu<span style="color: #000000;">(</span>root<span style="color: #000000;">)</span>
+root.config<span style="color: #000000;">(</span>menu=m<span style="color: #000000;">)</span>
+
+<span style="color: #005e8b;">fm</span> = Menu<span style="color: #000000;">(</span>m<span style="color: #000000;">)</span>
+m.add_cascade<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"File"</span>,menu=fm<span style="color: #000000;">)</span>
+fm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Open..."</span><span style="color: #000000;">)</span>
+fm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"New"</span><span style="color: #000000;">)</span>
+fm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Save..."</span><span style="color: #000000;">)</span>
+fm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Exit"</span><span style="color: #000000;">)</span>
+<span style="color: #005e8b;">hm</span> = Menu<span style="color: #000000;">(</span>m<span style="color: #000000;">)</span>
+m.add_cascade<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Help"</span>,menu=hm<span style="color: #000000;">)</span>
+hm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"Help"</span><span style="color: #000000;">)</span>
+hm.add_command<span style="color: #000000;">(</span>label=<span style="color: #3548cf;">"About"</span><span style="color: #000000;">)</span>
+root.mainloop<span style="color: #000000;">()</span> <span style="color: #7f0000;">#</span><span style="color: #7f0000;">main ==&gt; mainloop</span>
+</pre>
+</div>
+
+<p>
+<img src="example_3.6.png" alt="example_3.6.png" /> <img src="example_3.7.png" alt="example_3.7.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-orgcc83e11" class="outline-3">
-<h3 id="orgcc83e11"><span class="section-number-3">1.4.</span> Приклади коду 17.4</h3>
+<div id="outline-container-org2322fb4" class="outline-3">
+<h3 id="org2322fb4"><span class="section-number-3">1.4.</span> Приклади коду 17.4 - Смуга проктутки</h3>
 <div class="outline-text-3" id="text-1-4">
+</div>
+<div id="outline-container-orgdc34e09" class="outline-4">
+<h4 id="orgdc34e09"><span class="section-number-4">1.4.1.</span> 1-ша програма</h4>
+<div class="outline-text-4" id="text-1-4-1">
 <div class="org-src-container">
-<pre class="src src-python">
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">printer</span><span style="color: #000000;">(</span>event<span style="color: #000000;">)</span>:
+    <span style="color: #005e8b;">x</span> = var.get<span style="color: #000000;">()</span>
+    <span style="color: #8f0075;">print</span><span style="color: #000000;">(</span>x<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">root</span> = Tk<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">var</span> = IntVar<span style="color: #000000;">()</span>
+var.<span style="color: #8f0075;">set</span><span style="color: #000000;">(</span><span style="color: #0000b0;">5</span><span style="color: #000000;">)</span>
+<span style="color: #005e8b;">sca1</span> = Scale<span style="color: #000000;">(</span>root,orient=VERTICAL,length=<span style="color: #0000b0;">200</span>,
+             from_=<span style="color: #0000b0;">0</span>,to=<span style="color: #0000b0;">10</span>,tickinterval=<span style="color: #0000b0;">2</span>,resolution=<span style="color: #0000b0;">1</span>,
+             variable=var<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">sca2</span> = Scale<span style="color: #000000;">(</span>root,orient=HORIZONTAL,length=<span style="color: #0000b0;">200</span>,
+             from_=<span style="color: #0000b0;">0</span>,to=<span style="color: #0000b0;">10</span>,tickinterval=<span style="color: #0000b0;">2</span>,resolution=<span style="color: #0000b0;">1</span>,
+             variable=var<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">lab</span>=Label<span style="color: #000000;">(</span>root, text=<span style="color: #3548cf;">'&#1051;&#1072;&#1073;&#1086;&#1088;&#1072;&#1090;&#1086;&#1088;&#1085;&#1072; &#1088;&#1086;&#1073;&#1086;&#1090;&#1072; </span><span style="color: #0000b0;">\n</span><span style="color: #3548cf;"> Graphical User Interface'</span>, font=<span style="color: #3548cf;">'Arial 18'</span><span style="color: #000000;">)</span>
+<span style="color: #005e8b;">but</span>=Button<span style="color: #000000;">(</span>root, text=<span style="color: #3548cf;">'&#1044;&#1110;&#1079;&#1085;&#1080;&#1090;&#1080;&#1089;&#1103; &#1079;&#1085;&#1072;&#1095;&#1077;&#1085;&#1085;&#1103; &#1079;&#1084;&#1110;&#1085;&#1085;&#1086;&#1111;'</span>,width=<span style="color: #0000b0;">30</span>,height=<span style="color: #0000b0;">3</span>,
+bg=<span style="color: #3548cf;">'grey'</span>,fg=<span style="color: #3548cf;">'red'</span>,font=<span style="color: #3548cf;">'Arial 12'</span><span style="color: #000000;">)</span>
+but.bind<span style="color: #000000;">(</span><span style="color: #3548cf;">'&lt;Button-1&gt;'</span>,printer<span style="color: #000000;">)</span>
+lab.pack<span style="color: #000000;">()</span>
+sca1.pack<span style="color: #000000;">()</span>
+sca2.pack<span style="color: #000000;">()</span>
+but.pack<span style="color: #000000;">()</span>
+root.mainloop<span style="color: #000000;">()</span>
 </pre>
 </div>
 
 
-<div id="org058a2d5" class="figure">
-<p><img src="example_4.png" alt="example_4.png" />
+<div id="orgb709b95" class="figure">
+<p><img src="example_4.1.png" alt="example_4.1.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org5f38d8f" class="outline-3">
-<h3 id="org5f38d8f"><span class="section-number-3">1.5.</span> Приклади коду 17.5</h3>
+<div id="outline-container-org738fb41" class="outline-4">
+<h4 id="org738fb41"><span class="section-number-4">1.4.2.</span> 2-ша програма</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+<span style="color: #005e8b;">root</span> = Tk<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">myscrollbar</span> = Scrollbar<span style="color: #000000;">(</span>root<span style="color: #000000;">)</span>
+myscrollbar.pack<span style="color: #000000;">(</span>side=RIGHT, fill=Y<span style="color: #000000;">)</span>
+
+<span style="color: #005e8b;">mylistbox</span> = Listbox<span style="color: #000000;">(</span>root, yscrollcommand = myscrollbar.<span style="color: #8f0075;">set</span><span style="color: #000000;">)</span>
+<span style="color: #531ab6;">for</span> a <span style="color: #531ab6;">in</span> <span style="color: #8f0075;">range</span><span style="color: #000000;">(</span><span style="color: #0000b0;">20</span><span style="color: #000000;">)</span>:
+    mylistbox.insert<span style="color: #000000;">(</span>END,<span style="color: #3548cf;">'Lumberjack-'</span> + <span style="color: #8f0075;">str</span><span style="color: #dd22dd;">(</span>a<span style="color: #dd22dd;">)</span><span style="color: #000000;">)</span>
+mylistbox.pack<span style="color: #000000;">(</span>side=LEFT, fill=BOTH<span style="color: #000000;">)</span>
+myscrollbar.config<span style="color: #000000;">(</span>command=mylistbox.yview<span style="color: #000000;">)</span>
+root.mainloop<span style="color: #000000;">()</span>
+</pre>
+</div>
+
+
+<div id="org7615e60" class="figure">
+<p><img src="example_4.2.png" alt="example_4.2.png" />
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="outline-container-org39f47ce" class="outline-3">
+<h3 id="org39f47ce"><span class="section-number-3">1.5.</span> Приклади коду 17.5 - Завантаження текстового файлу у редактор</h3>
 <div class="outline-text-3" id="text-1-5">
 <div class="org-src-container">
-<pre class="src src-python">
+<pre class="src src-python"><span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+<span style="color: #531ab6;">import</span> tkinter.filedialog
+
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">LoadFile</span><span style="color: #000000;">(</span>ev<span style="color: #000000;">)</span>:
+    <span style="color: #005e8b;">fn</span>=tkinter.filedialog.Open<span style="color: #000000;">(</span>root, filetypes=<span style="color: #dd22dd;">[</span><span style="color: #008899;">(</span><span style="color: #3548cf;">'*.md files'</span>, <span style="color: #3548cf;">'.md'</span><span style="color: #008899;">)</span><span style="color: #dd22dd;">]</span><span style="color: #000000;">)</span>.show<span style="color: #000000;">()</span>
+    <span style="color: #531ab6;">if</span> fn == <span style="color: #3548cf;">''</span>:
+        <span style="color: #531ab6;">return</span>
+    textbox.delete<span style="color: #000000;">(</span><span style="color: #3548cf;">'1.0'</span>, <span style="color: #3548cf;">'end'</span><span style="color: #000000;">)</span>
+    textbox.insert<span style="color: #000000;">(</span><span style="color: #3548cf;">'1.0'</span>, <span style="color: #8f0075;">open</span><span style="color: #dd22dd;">(</span>fn, <span style="color: #3548cf;">'rt'</span><span style="color: #dd22dd;">)</span>.read<span style="color: #dd22dd;">()</span><span style="color: #000000;">)</span>
+
+<span style="color: #005e8b;">root</span> = Tk<span style="color: #000000;">()</span>
+
+<span style="color: #005e8b;">panelFrame</span> = Frame<span style="color: #000000;">(</span>root, height = <span style="color: #0000b0;">20</span>, bg = <span style="color: #3548cf;">'blue'</span><span style="color: #000000;">)</span>
+<span style="color: #005e8b;">textFrame</span> = Frame<span style="color: #000000;">(</span>root, height = <span style="color: #0000b0;">40</span>, width = <span style="color: #0000b0;">50</span><span style="color: #000000;">)</span>
+
+panelFrame.pack<span style="color: #000000;">(</span>side = <span style="color: #3548cf;">'top'</span>, fill = <span style="color: #3548cf;">'x'</span><span style="color: #000000;">)</span>
+textFrame.pack<span style="color: #000000;">(</span>side = <span style="color: #3548cf;">'bottom'</span>, fill = <span style="color: #3548cf;">'both'</span>, expand = <span style="color: #0000b0;">1</span><span style="color: #000000;">)</span>
+
+<span style="color: #005e8b;">textbox</span> = Text<span style="color: #000000;">(</span>textFrame, font=<span style="color: #3548cf;">'Arial 12'</span>, wrap=<span style="color: #3548cf;">'word'</span><span style="color: #000000;">)</span>
+<span style="color: #005e8b;">scrollbar</span> = Scrollbar<span style="color: #000000;">(</span>textFrame<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">scrollbar</span><span style="color: #000000;">[</span><span style="color: #3548cf;">'command'</span><span style="color: #000000;">]</span> = textbox.yview
+<span style="color: #005e8b;">textbox</span><span style="color: #000000;">[</span><span style="color: #3548cf;">'yscrollcommand'</span><span style="color: #000000;">]</span> = scrollbar.<span style="color: #8f0075;">set</span>
+
+textbox.pack<span style="color: #000000;">(</span>side = <span style="color: #3548cf;">'left'</span>, fill = <span style="color: #3548cf;">'both'</span>, expand = <span style="color: #0000b0;">1</span><span style="color: #000000;">)</span>
+scrollbar.pack<span style="color: #000000;">(</span>side = <span style="color: #3548cf;">'right'</span>, fill = <span style="color: #3548cf;">'y'</span><span style="color: #000000;">)</span>
+
+<span style="color: #005e8b;">loadBtn</span> = Button<span style="color: #000000;">(</span>panelFrame, text = <span style="color: #3548cf;">'Open'</span><span style="color: #000000;">)</span>
+loadBtn.bind<span style="color: #000000;">(</span><span style="color: #3548cf;">"&lt;Button-1&gt;"</span>, LoadFile<span style="color: #000000;">)</span>
+loadBtn.place<span style="color: #000000;">(</span>x = <span style="color: #0000b0;">10</span>, y = <span style="color: #0000b0;">1</span>, width = <span style="color: #0000b0;">40</span>, height = <span style="color: #0000b0;">20</span><span style="color: #000000;">)</span>
+root.mainloop<span style="color: #000000;">()</span>
 </pre>
 </div>
 
-
-<div id="org0628048" class="figure">
-<p><img src="example_5.png" alt="example_5.png" />
+<p>
+<img src="example_5.1.png" alt="example_5.1.png" />
+<img src="example_5.2.png" alt="example_5.2.png" />
 </p>
 </div>
 </div>
-</div>
-<div id="outline-container-org4500fe7" class="outline-3">
-<h3 id="org4500fe7"><span class="section-number-3">1.6.</span> Приклади коду 17.6</h3>
+<div id="outline-container-orge522bb3" class="outline-3">
+<h3 id="orge522bb3"><span class="section-number-3">1.6.</span> Приклади коду 17.6 - Геометричні фігури</h3>
 <div class="outline-text-3" id="text-1-6">
+<p>
+При натисканні на кнопку <code>Трикутник</code>, <code>Прямокутник</code> тощо, на полотні з‘являється
+відповідна фігура, а в текстовому полі її визначення. При клацанні на фігурі,
+яка розташована на полотні, вона змінюється на іншу, що теж відноситься до тієї
+ж групи (наприклад, трикутники – прямокутні або рівносторонні). Внизу полотна
+з'являються пояснення, що характеризують чергову фігуру (наприклад, «прямокутний
+трикутник»). Можна отримати частини фігури (для трикутника це сторони), щоб
+продемонструвати, як вони утворюються
+</p>
 <div class="org-src-container">
-<pre class="src src-python">
+<pre class="src src-python"><span style="color: #005e8b;">i</span> = <span style="color: #0000b0;">0</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">add_triangle</span><span style="color: #000000;">(</span>event<span style="color: #000000;">)</span>:
+    <span style="color: #005e8b;">coords</span> = <span style="color: #000000;">[</span><span style="color: #dd22dd;">(</span><span style="color: #0000b0;">50</span>,<span style="color: #0000b0;">130</span>,<span style="color: #0000b0;">290</span>,<span style="color: #0000b0;">40</span>,<span style="color: #0000b0;">170</span>,<span style="color: #0000b0;">250</span><span style="color: #dd22dd;">)</span>,<span style="color: #dd22dd;">(</span><span style="color: #0000b0;">10</span>,<span style="color: #0000b0;">10</span>,<span style="color: #0000b0;">290</span>,<span style="color: #0000b0;">30</span>,<span style="color: #0000b0;">200</span>,<span style="color: #0000b0;">250</span><span style="color: #dd22dd;">)</span>,
+              <span style="color: #dd22dd;">(</span><span style="color: #0000b0;">30</span>,<span style="color: #0000b0;">280</span>,<span style="color: #0000b0;">330</span>,<span style="color: #0000b0;">60</span>,<span style="color: #0000b0;">300</span>,<span style="color: #0000b0;">200</span><span style="color: #dd22dd;">)</span>,<span style="color: #dd22dd;">(</span><span style="color: #0000b0;">50</span>,<span style="color: #0000b0;">200</span>,<span style="color: #0000b0;">340</span>,<span style="color: #0000b0;">200</span>,<span style="color: #0000b0;">110</span>,<span style="color: #0000b0;">60</span><span style="color: #dd22dd;">)</span><span style="color: #000000;">]</span>
+    <span style="color: #005e8b;">colors</span> = <span style="color: #000000;">[</span><span style="color: #3548cf;">'red'</span>,<span style="color: #3548cf;">'green'</span>,<span style="color: #3548cf;">'blue'</span>,<span style="color: #3548cf;">'yellow'</span><span style="color: #000000;">]</span>
+    <span style="color: #531ab6;">global</span> i
+    canvas.itemconfig<span style="color: #000000;">(</span>t,fill=colors<span style="color: #dd22dd;">[</span>i<span style="color: #dd22dd;">]</span>,outline=<span style="color: #3548cf;">'white'</span><span style="color: #000000;">)</span>
+    canvas.coords<span style="color: #000000;">(</span>t,coords<span style="color: #dd22dd;">[</span>i<span style="color: #dd22dd;">]</span><span style="color: #000000;">)</span>
+    <span style="color: #005e8b;">i</span> += <span style="color: #0000b0;">1</span>
+    <span style="color: #531ab6;">if</span> i == <span style="color: #0000b0;">4</span>:
+      <span style="color: #005e8b;">i</span> = <span style="color: #0000b0;">0</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">triangle</span><span style="color: #000000;">()</span>:
+    canvas.coords<span style="color: #000000;">(</span>r,<span style="color: #dd22dd;">(</span><span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span><span style="color: #dd22dd;">)</span><span style="color: #000000;">)</span>
+    canvas.itemconfig<span style="color: #000000;">(</span>t,fill=<span style="color: #3548cf;">'yellow'</span>,outline=<span style="color: #3548cf;">'white'</span><span style="color: #000000;">)</span>
+    canvas.coords<span style="color: #000000;">(</span>t,<span style="color: #dd22dd;">(</span><span style="color: #0000b0;">50</span>,<span style="color: #0000b0;">200</span>,<span style="color: #0000b0;">340</span>,<span style="color: #0000b0;">200</span>,<span style="color: #0000b0;">110</span>,<span style="color: #0000b0;">60</span><span style="color: #dd22dd;">)</span><span style="color: #000000;">)</span>
+    text.delete<span style="color: #000000;">(</span><span style="color: #0000b0;">1</span>.<span style="color: #0000b0;">0</span>,END<span style="color: #000000;">)</span>
+    text.insert<span style="color: #000000;">(</span><span style="color: #0000b0;">1</span>.<span style="color: #0000b0;">0</span>,<span style="color: #3548cf;">'&#1058;&#1088;&#1080;&#1082;&#1091;&#1090;&#1085;&#1080;&#1082; - &#1075;&#1077;&#1086;&#1084;&#1077;&#1090;&#1088;&#1080;&#1095;&#1085;&#1072; &#1092;&#1110;&#1075;&#1091;&#1088;&#1072; &#1091;&#1090;&#1074;&#1086;&#1088;&#1077;&#1085;&#1072; &#1089;&#1087;&#1086;&#1083;&#1091;&#1095;&#1077;&#1085;&#1085;&#1103;&#1084; &#1090;&#1088;&#1100;&#1086;&#1093; &#1090;&#1086;&#1095;&#1086;&#1082;, &#1097;&#1086; &#1085;&#1077; &#1083;&#1077;&#1078;&#1072;&#1090;&#1100; &#1086;&#1076;&#1085;&#1110;&#1081; &#1087;&#1088;&#1103;&#1084;&#1110;&#1081;'</span><span style="color: #000000;">)</span>
+    text.tag_add<span style="color: #000000;">(</span><span style="color: #3548cf;">'title'</span>,<span style="color: #3548cf;">'1.0'</span>,<span style="color: #3548cf;">'1.end'</span><span style="color: #000000;">)</span>
+    text.tag_config<span style="color: #000000;">(</span><span style="color: #3548cf;">'title'</span>,font=<span style="color: #dd22dd;">(</span><span style="color: #3548cf;">'Times'</span>,<span style="color: #0000b0;">14</span><span style="color: #dd22dd;">)</span>,foreground=<span style="color: #3548cf;">'red'</span><span style="color: #000000;">)</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">rectangle</span><span style="color: #000000;">()</span>:
+    canvas.coords<span style="color: #000000;">(</span>t,<span style="color: #dd22dd;">(</span><span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span><span style="color: #dd22dd;">)</span><span style="color: #000000;">)</span>
+    canvas.itemconfig<span style="color: #000000;">(</span>r,fill=<span style="color: #3548cf;">'lightblue'</span>,outline=<span style="color: #3548cf;">'white'</span><span style="color: #000000;">)</span>
+    canvas.coords<span style="color: #000000;">(</span>r,<span style="color: #dd22dd;">(</span><span style="color: #0000b0;">80</span>,<span style="color: #0000b0;">50</span>,<span style="color: #0000b0;">360</span>,<span style="color: #0000b0;">200</span><span style="color: #dd22dd;">)</span><span style="color: #000000;">)</span>
+<span style="color: #531ab6;">def</span> <span style="color: #721045;">ellipse</span><span style="color: #000000;">()</span>:
+<span style="color: #531ab6;">pass</span>
+<span style="color: #531ab6;">from</span> tkinter <span style="color: #531ab6;">import</span> *
+<span style="color: #005e8b;">win</span> = Tk<span style="color: #000000;">()</span>
+<span style="color: #005e8b;">b_triangle</span> = Button<span style="color: #000000;">(</span>text=<span style="color: #3548cf;">"&#1058;&#1088;&#1077;&#1091;&#1075;&#1086;&#1083;&#1100;&#1085;&#1080;&#1082;"</span>, width=<span style="color: #0000b0;">15</span>,command=triangle<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">b_rectangle</span> = Button<span style="color: #000000;">(</span>text=<span style="color: #3548cf;">"&#1055;&#1088;&#1103;&#1084;&#1086;&#1091;&#1075;&#1086;&#1083;&#1100;&#1085;&#1080;&#1082;"</span>,
+                     width=<span style="color: #0000b0;">15</span>,command=rectangle<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">b_ellipse</span> = Button<span style="color: #000000;">(</span>text=<span style="color: #3548cf;">"&#1069;&#1083;&#1083;&#1080;&#1087;&#1089;"</span>, width=<span style="color: #0000b0;">15</span>,command=ellipse<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">canvas</span> = Canvas<span style="color: #000000;">(</span>width=<span style="color: #0000b0;">400</span>,height=<span style="color: #0000b0;">300</span>,bg=<span style="color: #3548cf;">'#222222'</span><span style="color: #000000;">)</span>
+<span style="color: #005e8b;">text</span> = Text<span style="color: #000000;">(</span>width=<span style="color: #0000b0;">55</span>,height=<span style="color: #0000b0;">5</span>,bg=<span style="color: #3548cf;">'#ffffff'</span>,wrap=WORD<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">t</span> = canvas.create_polygon<span style="color: #000000;">(</span><span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span><span style="color: #000000;">)</span>
+canvas.tag_bind<span style="color: #000000;">(</span>t,<span style="color: #3548cf;">'&lt;Button-1&gt;'</span>,add_triangle<span style="color: #000000;">)</span>
+<span style="color: #005e8b;">r</span> = canvas.create_rectangle<span style="color: #000000;">(</span><span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span>,<span style="color: #0000b0;">0</span><span style="color: #000000;">)</span>
+b_triangle.grid<span style="color: #000000;">(</span>row=<span style="color: #0000b0;">0</span>,column=<span style="color: #0000b0;">0</span><span style="color: #000000;">)</span>
+b_rectangle.grid<span style="color: #000000;">(</span>row=<span style="color: #0000b0;">1</span>,column=<span style="color: #0000b0;">0</span><span style="color: #000000;">)</span>
+b_ellipse.grid<span style="color: #000000;">(</span>row=<span style="color: #0000b0;">2</span>,column=<span style="color: #0000b0;">0</span><span style="color: #000000;">)</span>
+canvas.grid<span style="color: #000000;">(</span>row=<span style="color: #0000b0;">0</span>,column=<span style="color: #0000b0;">1</span>,rowspan=<span style="color: #0000b0;">10</span><span style="color: #000000;">)</span>
+text.grid<span style="color: #000000;">(</span>row=<span style="color: #0000b0;">11</span>,column=<span style="color: #0000b0;">1</span>,rowspan=<span style="color: #0000b0;">3</span><span style="color: #000000;">)</span>
+win.mainloop<span style="color: #000000;">()</span>
 </pre>
 </div>
 
 
-<div id="org6484264" class="figure">
+<div id="org6a2485b" class="figure">
 <p><img src="example_6.png" alt="example_6.png" />
 </p>
 </div>
 </div>
 </div>
-<div id="outline-container-org5a3d3c8" class="outline-3">
-<h3 id="org5a3d3c8"><span class="section-number-3">1.7.</span> Приклади коду 17.7</h3>
-<div class="outline-text-3" id="text-1-7">
-<div class="org-src-container">
-<pre class="src src-python">
-</pre>
 </div>
-
-
-<div id="orgd30505e" class="figure">
-<p><img src="example_7.png" alt="example_7.png" />
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-org90b2c02" class="outline-3">
-<h3 id="org90b2c02"><span class="section-number-3">1.8.</span> Приклади коду 17.8</h3>
-<div class="outline-text-3" id="text-1-8">
-<div class="org-src-container">
-<pre class="src src-python">
-</pre>
-</div>
-
-
-<div id="org5f96d0a" class="figure">
-<p><img src="example_8.png" alt="example_8.png" />
-</p>
-</div>
-</div>
-</div>
-<div id="outline-container-org6a662a8" class="outline-3">
-<h3 id="org6a662a8"><span class="section-number-3">1.9.</span> Приклади коду 17.9</h3>
-<div class="outline-text-3" id="text-1-9">
-<div class="org-src-container">
-<pre class="src src-python">
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org0b90590" class="outline-3">
-<h3 id="org0b90590"><span class="section-number-3">1.10.</span> Приклади коду 17.10</h3>
-<div class="outline-text-3" id="text-1-10">
-<div class="org-src-container">
-<pre class="src src-python">
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org96302a6" class="outline-3">
-<h3 id="org96302a6"><span class="section-number-3">1.11.</span> Приклади коду 17.11</h3>
-<div class="outline-text-3" id="text-1-11">
-<div class="org-src-container">
-<pre class="src src-python">
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orge04621f" class="outline-3">
-<h3 id="orge04621f"><span class="section-number-3">1.12.</span> Приклади коду 17.12</h3>
-<div class="outline-text-3" id="text-1-12">
-<div class="org-src-container">
-<pre class="src src-python">
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-org3e315fe" class="outline-3">
-<h3 id="org3e315fe"><span class="section-number-3">1.13.</span> Приклади коду 17.13</h3>
-<div class="outline-text-3" id="text-1-13">
-<div class="org-src-container">
-<pre class="src src-python">
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-orgbad9392" class="outline-3">
-<h3 id="orgbad9392"><span class="section-number-3">1.14.</span> Приклади коду 17.14</h3>
-<div class="outline-text-3" id="text-1-14">
-<div class="org-src-container">
-<pre class="src src-python">
-</pre>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-orgd4b8aa1" class="outline-2">
-<h2 id="orgd4b8aa1"><span class="section-number-2">2.</span> Самостійна частина. Варіант 1</h2>
+<div id="outline-container-orgcccf0d6" class="outline-2">
+<h2 id="orgcccf0d6"><span class="section-number-2">2.</span> Самостійна частина. Варіант 1</h2>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: ihor</p>
-<p class="date">Created: 2025-03-31 Mon 02:37</p>
+<p class="date">Created: 2025-03-31 Mon 04:15</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

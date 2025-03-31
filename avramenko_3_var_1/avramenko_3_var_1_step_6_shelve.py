@@ -12,7 +12,7 @@ computerna_403 = Computerna(403, 430)
 #    VYKLADATSKA
 vykladatska_3 = Vykladatska(3, 30)
 import shelve
-db = shelve.open("MyDB_made_wiht_shelve")
+db = shelve.open("MyDB_made_with_shelve")
 for object in (lekciyna_301,lekciyna_302,lekciyna_303,computerna_202,computerna_207,computerna_403,vykladatska_3):
     db[str(object.nomer)] = object
 db.close()

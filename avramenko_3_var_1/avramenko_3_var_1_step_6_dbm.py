@@ -14,9 +14,7 @@ computerna_403 = Computerna(403, 430)
 #    VYKLADATSKA
 vykladatska_3 = Vykladatska(3, 30)
 
-db = dbm.open("MyDB_made_wiht_dbm", 'n')
+db = dbm.open("MyDB_made_with_dbm", 'n')
 for object in (lekciyna_301,lekciyna_302,lekciyna_303,computerna_202,computerna_207,computerna_403,vykladatska_3):
-    print(object)
     db[object.nomer]=str(object)
-print(len(db))
 db.close

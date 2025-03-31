@@ -903,7 +903,7 @@ b'Tom Jones' => b'Tom Jones, mgr, 50000.0'
 * Самостійна частина. Варіант 1
 ** Крок 1. Створити клас, який містить конструктор классу; на основі класу створити декілька об‘єктів.
 
-#+begin_src python :results output :tangle avramenko_3_var_1_step_1.py
+#+begin_src python :results output :exports both :tangle avramenko_3_var_1_step_1.py
   class audytoriya():
       def __init__(self, nomer, purpose = None, sits = 0):
           self.nomer   = nomer
@@ -931,7 +931,7 @@ b'Tom Jones' => b'Tom Jones, mgr, 50000.0'
 
 ** Крок 2. Додати методи, які визначають поведінку об‘єктів.
 
-#+begin_src python :results output :tangle avramenko_3_var_1_step_2.py
+#+begin_src python :results output  :exports both :tangle avramenko_3_var_1_step_2.py
   class audytoriya():
       def __init__(self,nomer,purpose = None,sits = 0):
           self.setNomer(nomer), self.setPurpose(purpose), self.setSits(sits)
@@ -964,7 +964,7 @@ b'Tom Jones' => b'Tom Jones, mgr, 50000.0'
 
 ** Крок 3. Перевантаження операторів.
 
-#+begin_src python :results output :tangle avramenko_3_var_1_step_3.py
+#+begin_src python :results output  :exports both :tangle avramenko_3_var_1_step_3.py
   class audytoriya():
       def __init__(self,nomer,purpose = None,sits = 0):
           self.setNomer(nomer), self.setPurpose(purpose), self.setSits(sits)
@@ -1019,7 +1019,7 @@ b'Tom Jones' => b'Tom Jones, mgr, 50000.0'
 перевизначає метод суперкласу, адаптуючи його, інший метод є новим доповненням
 до підкласу).
 
-#+begin_src python :results output :tangle avramenko_3_var_1_step_4.py
+#+begin_src python :results output  :exports both :tangle avramenko_3_var_1_step_4.py
   import avramenko_3_var_1_step_3 as aud
   #    LEKCIYNA
   class Lekciyna    (aud.audytoriya):
@@ -1081,7 +1081,7 @@ VYKLADATSKA
 
 ** Крок 5. Адаптація конструкторів (додати адаптований конструктор в підклас).
 
-#+begin_src python :results output :tangle avramenko_3_var_1_step_5.py
+#+begin_src python :results output  :exports both :tangle avramenko_3_var_1_step_5.py
   #    AUDYTORIYA
   class Audytoriya():
       def __init__(self,nomer,purpose = None,sits = 0):
@@ -1192,7 +1192,7 @@ VYKLADATSKA
 
 ** Крок 6. Збереження об'єктів в базі даних (модулі shelve і dbm). Дослідження сховища в інтерактивному сеансі.
 *** Модуль shelve
-#+begin_src python :results none :tangle avramenko_3_var_1_step_6_shelve.py
+#+begin_src python :results none  :exports both :tangle avramenko_3_var_1_step_6_shelve.py
   from avramenko_3_var_1_step_5 import Audytoriya, Lekciyna, Computerna, Vykladatska
   #    LEKCIYNA
   lekciyna_301 = Lekciyna(301, 310)
@@ -1213,7 +1213,7 @@ VYKLADATSKA
   db.close()
 #+end_src
 
-#+begin_src python :results output :tangle avramenko_3_var_1_step_6_shelve_explore.py
+#+begin_src python :results output  :exports both :tangle avramenko_3_var_1_step_6_shelve_explore.py
    import shelve
    db = shelve.open("MyDB_made_with_shelve")
    for key in db:
@@ -1261,7 +1261,7 @@ VYKLADATSKA
 #+end_example
 
 *** Модуль dbm
-#+begin_src python :results none :exports both :tangle  avramenko_3_var_1_step_6_dbm.py
+#+begin_src python :results none :exports both  :exports both :tangle  avramenko_3_var_1_step_6_dbm.py
   import dbm
 
   from avramenko_3_var_1_step_5 import Audytoriya, Lekciyna, Computerna, Vykladatska
